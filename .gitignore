@@ -1,5 +1,13 @@
+# Secrets — Azure/OpenAI keys must never be committed
 .env
 .env.*
+*.key
+*.pem
+*.pfx
+*secret*
+*credential*
+keys/
+
 node_modules/
 .DS_Store
 Thumbs.db

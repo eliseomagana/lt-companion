@@ -126,8 +126,8 @@ function markupSpanish(text, glossary) {
     const token = `\u0000${slots.length}\u0000`;
     slots.push(
       lang.toLowerCase() === "es"
-        ? `<lang xml:lang="es-MX"><voice name="${ES_VOICE}">${inner}</voice></lang>`
-        : `<lang xml:lang="en-US"><voice name="${EN_VOICE}">${inner}</voice></lang>`
+        ? `<lang xml:lang="es-MX">${inner}</lang>`
+        : `<lang xml:lang="en-US">${inner}</lang>`
     );
     return token;
   });
@@ -140,7 +140,9 @@ function markupSpanish(text, glossary) {
     );
     out = out.replace(re, (full, pre, hit) => {
       const token = `\u0000${slots.length}\u0000`;
-      slots.push(`<lang xml:lang="es-MX"><voice name="${ES_VOICE}">${hit}</voice></lang>`);
+      // Azure forbids nested <voice>; <lang> inside a multilingual voice is
+      // the supported way to switch phonetics mid-sentence.
+      slots.push(`<lang xml:lang="es-MX">${hit}</lang>`);
       return pre + token;
     });
   }
