@@ -41,7 +41,7 @@ HTTPS, or deploy.
 | `index.html` | Four screens: start, lesson, answer, summary. Plus the debug panel. |
 | `app.js` | Everything — lesson data, SM-2, audio engine, Media Session, input. |
 | `style.css` | Light/dark via CSS custom properties, auto-switching on `prefers-color-scheme`. |
-| `audio/*.mp3` | One clip per lesson item. **Currently placeholder tones, not speech.** |
+| `audio/*.mp3` | One clip per lesson item, Azure TTS speech (~9.7 min total). |
 | `generate-audio.mjs` | Generates the real audio from `LESSON_ITEMS` via Azure/OpenAI TTS. |
 
 ---
@@ -199,12 +199,18 @@ Working: full lesson flow, SM-2 scheduling in `localStorage`, light/dark
 theme, CC toggle, Media Session with hardware buttons, in-app multi-press,
 auto-advance, timeout handling with requeue, debug panel.
 
-Placeholder: **all 38 audio files are ffmpeg sine tones, not speech.** They
-exist so Media Session has something real to attach to for button testing.
-Replacing them via `generate-audio.mjs` is the next substantive step.
+Audio: all 38 clips are Azure speech — `en-US-AndrewMultilingualNeural`
+with `<lang xml:lang="es-MX">` spans (no nested `<voice>`; Azure rejects
+it). Pronunciation not yet reviewed by ear.
 
-Not done: no git repo, not deployed to GitHub Pages, no pre/post quiz,
-"Almost" rating is unreachable by headphone (3 presses is taken by replay).
+Deployed: https://eliseomagana.github.io/lt-companion/ from `main` / root
+(repo github.com/eliseomagana/lt-companion, public). Push to `main` redeploys.
+
+Not done: no pre/post quiz, no PWA icons (manifest references
+`icon-192.png` / `icon-512.png`, which don't exist), "Almost" rating is
+unreachable by headphone (3 presses is taken by replay). Three orphan
+sine-tone clips (`prompt_typical`, `prompt_communication`,
+`prompt_need_to_communicate`) match no item.
 
 ---
 
