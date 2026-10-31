@@ -22,7 +22,7 @@
  * Azure (recommended — real SSML language switching, 500k chars/mo free):
  *   export TTS_PROVIDER=azure
  *   export AZURE_SPEECH_KEY=...
- *   export AZURE_SPEECH_REGION=eastus
+ *   export AZURE_SPEECH_REGION=westus2
  *
  * OpenAI (simpler, no SSML — relies on the model handling Spanish itself):
  *   export TTS_PROVIDER=openai

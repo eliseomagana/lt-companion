@@ -167,12 +167,17 @@ Spanish.
 ## Generating audio
 
 ```
-export AZURE_SPEECH_KEY=...  AZURE_SPEECH_REGION=eastus
+export AZURE_SPEECH_KEY=...  AZURE_SPEECH_REGION=westus2
 node generate-audio.mjs --dry      # inspect SSML, calls nothing
 node generate-audio.mjs            # generate changed items only
 node generate-audio.mjs --force    # regenerate everything
 node generate-audio.mjs --only vowel_a
 ```
+
+The Azure resource is F0 tier in **westus2** — East US is blocked by the
+Azure for Students region policy, so don't "fix" the region back. Keys can
+also live in a gitignored `.env`, loaded with `node --env-file=.env …`
+(Node 20.6+).
 
 Reads `LESSON_ITEMS` directly, so filenames always match. Hashes each script
 into `.audio-manifest.json` and skips unchanged items.

@@ -127,7 +127,7 @@ So if you're converting an English word that starts with S plus a consonant, you
 
 A whole family of English words ending in "-al" are spelled exactly the same in Spanish. Normal. Natural. Total. Metal. Animal. Hospital. Identical spelling.
 
-What changes is where you put the weight. In English we front-load these words: NOR-mal. TO-tal. AN-i-mal. In Spanish the stress moves to the end: nor-MAL. to-TAL. a-ni-MAL.
+What changes is where you put the weight. In English we front-load these words: NOR-mal. TO-tal. AN-i-mal. In Spanish the stress moves to the end: {{es:normal}}. {{es:total}}. {{es:animal}}.
 
 And this isn't arbitrary. Spanish has a rule: when a word ends in a consonant other than N or S, the stress falls on the last syllable. "-al" ends in L. So the stress always pulls to that final AL — and because the rule already predicts it, no accent mark is needed.`,
   },
