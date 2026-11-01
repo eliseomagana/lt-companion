@@ -18,6 +18,7 @@
  *   node tools/generate-audio.mjs                # generate changed items
  *   node tools/generate-audio.mjs --force        # regenerate everything
  *   node tools/generate-audio.mjs --only vowel_a # one item
+ *   node tools/generate-audio.mjs --answers      # answer clips only
  *
  * Azure (recommended — real SSML language switching, 500k chars/mo free):
  *   export TTS_PROVIDER=azure
@@ -45,11 +46,13 @@ if (!fs.existsSync(path.join(ROOT, "app.js"))) {
   process.exit(1);
 }
 const AUDIO_DIR = path.join(ROOT, "audio");
+const ANSWER_DIR = path.join(AUDIO_DIR, "answers");
 const MANIFEST = path.join(ROOT, ".audio-manifest.json");
 
 const args = process.argv.slice(2);
 const DRY = args.includes("--dry");
 const FORCE = args.includes("--force");
+const ANSWERS_ONLY = args.includes("--answers");
 const ONLY = args.includes("--only") ? args[args.indexOf("--only") + 1] : null;
 
 const PROVIDER = process.env.TTS_PROVIDER || "azure";
@@ -58,7 +61,24 @@ const PROVIDER = process.env.TTS_PROVIDER || "azure";
 // is a confound your participants will notice.
 const EN_VOICE = process.env.TTS_EN_VOICE || "en-US-AndrewMultilingualNeural";
 const ES_VOICE = process.env.TTS_ES_VOICE || "es-MX-JorgeNeural";
-const RATE     = process.env.TTS_RATE     || "-8%";   // slightly slow: this is instruction
+const RATE     = process.env.TTS_RATE     || "-15%";  // slow: this is instruction
+const ANSWER_RATE = process.env.TTS_ANSWER_RATE || "-8%";  // native voice paces well here
+
+// Isolated vowel sounds. Caption spellings like "ah" are English guesses, so
+// the voice gets exact Spanish IPA instead, with room around each sound.
+// A sound ending a sentence or a list gets the long pause; one mid-sentence
+// ("Always "ah," like…") only a short one.
+const VOWEL_IPA = { ah: "a", eh: "e", ee: "i", oh: "o", oo: "u" };
+const VOWEL_LETTERS = new Set(["A", "E", "I", "O", "U"]);
+const VOWEL_RE = /(?<![\p{L}-])(ah|eh|ee|oh|oo)(?![\p{L}-])/gu;
+const VOWEL_END_RE = /^(?:"?\.|,\s*(?:ah|eh|ee|oh|oo)(?!\p{L}))/u;
+const PAUSE_LONG = "1000ms";
+const PAUSE_SHORT = "300ms";
+
+function vowelSsml(text, ipa, pause) {
+  return `<lang xml:lang="es-MX"><phoneme alphabet="ipa" ph="${ipa}">${text}</phoneme></lang>`
+       + `<break time="${pause}"/>`;
+}
 
 // Words that must NEVER be auto-tagged as Spanish, because they are also
 // ordinary English words or English function words. Without this, "no accent
@@ -125,10 +145,17 @@ function markupSpanish(text, glossary) {
   out = out.replace(OVERRIDE_RE, (_, lang, inner) => {
     const token = `\u0000${slots.length}\u0000`;
     slots.push(
-      lang.toLowerCase() === "es"
-        ? `<lang xml:lang="es-MX">${inner}</lang>`
-        : `<lang xml:lang="en-US">${inner}</lang>`
+      lang.toLowerCase() !== "es" ? `<lang xml:lang="en-US">${inner}</lang>`
+      : VOWEL_LETTERS.has(inner) ? vowelSsml(inner, inner.toLowerCase(), PAUSE_LONG)
+      : `<lang xml:lang="es-MX">${inner}</lang>`
     );
+    return token;
+  });
+
+  out = out.replace(VOWEL_RE, (hit, _sound, offset, whole) => {
+    const token = `\u0000${slots.length}\u0000`;
+    const ending = VOWEL_END_RE.test(whole.slice(offset + hit.length));
+    slots.push(vowelSsml(hit, VOWEL_IPA[hit], ending ? PAUSE_LONG : PAUSE_SHORT));
     return token;
   });
 
@@ -155,6 +182,14 @@ function buildSsml(item, glossary) {
   return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" `
        + `xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-US">`
        + `<voice name="${EN_VOICE}"><prosody rate="${RATE}">${body}</prosody></voice>`
+       + `</speak>`;
+}
+
+// The model answer on the answer screen is pure Spanish, so it gets the
+// native voice rather than a <lang> span inside the English one.
+function buildAnswerSsml(item) {
+  return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="es-MX">`
+       + `<voice name="${ES_VOICE}"><prosody rate="${ANSWER_RATE}">${escapeXml(item.answer)}</prosody></voice>`
        + `</speak>`;
 }
 
@@ -212,27 +247,43 @@ const glossary = [
 let manifest = {};
 try { manifest = JSON.parse(fs.readFileSync(MANIFEST, "utf8")); } catch {}
 
-fs.mkdirSync(AUDIO_DIR, { recursive: true });
+fs.mkdirSync(ANSWER_DIR, { recursive: true });
 
 let made = 0, skipped = 0, failed = 0;
 
-for (const item of items) {
-  if (ONLY && item.id !== ONLY) continue;
+// Lesson clips first, then one answer clip per prompt. Answer manifest keys
+// are prefixed so an item's two clips are tracked separately.
+const jobs = [
+  ...(ANSWERS_ONLY ? [] : items.map((item) => ({
+    id: item.id,
+    key: item.id,
+    plain: scriptFor(item),
+    ssml: buildSsml(item, glossary),
+    dest: path.join(AUDIO_DIR, `${item.id}.mp3`),
+  }))),
+  ...items.filter((item) => item.type === "prompt").map((item) => ({
+    id: item.id,
+    key: `answers/${item.id}`,
+    plain: item.answer,
+    ssml: buildAnswerSsml(item),
+    dest: path.join(ANSWER_DIR, `${item.id}.mp3`),
+  })),
+];
 
-  const plain = scriptFor(item);
-  if (!plain.trim()) { console.log(`—  ${item.id} (no script)`); continue; }
+for (const { id, key, plain, ssml, dest } of jobs) {
+  if (ONLY && id !== ONLY) continue;
 
-  const ssml = buildSsml(item, glossary);
+  if (!plain.trim()) { console.log(`—  ${key} (no script)`); continue; }
+
   const hash = crypto.createHash("sha1")
     .update(ssml + EN_VOICE + ES_VOICE + RATE + PROVIDER).digest("hex").slice(0, 12);
-  const dest = path.join(AUDIO_DIR, `${item.id}.mp3`);
 
   if (DRY) {
-    console.log(`\n=== ${item.id} ===\n${ssml}`);
+    console.log(`\n=== ${key} ===\n${ssml}`);
     continue;
   }
 
-  if (!FORCE && manifest[item.id] === hash && fs.existsSync(dest)) {
+  if (!FORCE && manifest[key] === hash && fs.existsSync(dest)) {
     skipped++;
     continue;
   }
@@ -242,12 +293,12 @@ for (const item of items) {
       ? await synthOpenAI(ssml, plain)
       : await synthAzure(ssml);
     fs.writeFileSync(dest, buf);
-    manifest[item.id] = hash;
+    manifest[key] = hash;
     made++;
-    console.log(`✓  ${item.id}  (${(buf.length / 1024).toFixed(0)} KB)`);
+    console.log(`✓  ${key}  (${(buf.length / 1024).toFixed(0)} KB)`);
   } catch (e) {
     failed++;
-    console.error(`✗  ${item.id}  ${e.message}`);
+    console.error(`✗  ${key}  ${e.message}`);
   }
 }
 

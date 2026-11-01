@@ -16,7 +16,7 @@ const LESSON_ITEMS = [
     id: "vowel_intro",
     type: "concept",
     audioSrc: "audio/vowel_intro.mp3",
-    caption: `Here's the most important thing in Spanish pronunciation — and it's simpler than English, not harder.
+    caption: `Here's the most important thing in Spanish pronunciation, and it's simpler than English, not harder.
 
 Spanish has exactly five vowel sounds. Just five. They never change.
 
@@ -29,41 +29,47 @@ For Spanish, you're going to unlearn it. Five sounds. Always the same.`,
     type: "vowel",
     vowelLetter: "A",
     audioSrc: "audio/vowel_a.mp3",
-    caption: `The Spanish A. Always "ah" — like the sound a doctor asks you to make. Open, from the back of the throat. Not "ay" like "face." Not "uh" like "about." Just: ah. Examples: "casa" — ah. "gracias" — ah. Every single time.`,
+    caption: `The Spanish A. Always "ah," like the sound a doctor asks you to make. Open, from the back of the throat. Not "ay" like "face." Not "uh" like "about." Just: ah. Examples: "casa": ah. "gracias": ah. Every single time.`,
   },
   {
     id: "vowel_e",
     type: "vowel",
     vowelLetter: "E",
     audioSrc: "audio/vowel_e.mp3",
-    caption: `The Spanish E. Always "eh" — like the "e" in "bed." Short and clean. Not "ee" like "he." Not "ay" like "they." Just: eh. Examples: "leche" — eh. "nombre" — eh. Consistent every time.`,
+    caption: `The Spanish E. Always "eh," like the "e" in "bed." Short and clean. Not "ee" like "he." Not "ay" like "they." Just: eh. Examples: "leche": eh. "nombre": eh. Consistent every time.`,
   },
   {
     id: "vowel_i",
     type: "vowel",
     vowelLetter: "I",
     audioSrc: "audio/vowel_i.mp3",
-    caption: `The Spanish I. Always "ee" — like the "ee" in "feet." Pure, held. Not "ih" like "bit." Not "eye" like "mine." Just: ee. Examples: "sí" — ee. "libro" — ee. Never wavers.`,
+    caption: `The Spanish I. Always "ee," like the "ee" in "feet." Pure, held. Not "ih" like "bit." Not "eye" like "mine." Just: ee. Examples: "sí": ee. "libro": ee. Never wavers.`,
   },
   {
     id: "vowel_o",
     type: "vowel",
     vowelLetter: "O",
     audioSrc: "audio/vowel_o.mp3",
-    caption: `The Spanish O. Always "oh" — like "go," but shorter, without the "w" glide at the end that English speakers add. Not "aw" like "more." Not "uh" like "come." Just: oh. Examples: "hola" — oh. "poco" — oh. Pure and round.`,
+    caption: `The Spanish O. Always "oh," like "go," but shorter, without the "w" glide at the end that English speakers add. Not "aw" like "more." Not "uh" like "come." Just: oh. Examples: "hola": oh. "poco": oh. Pure and round.`,
   },
   {
     id: "vowel_u",
     type: "vowel",
     vowelLetter: "U",
     audioSrc: "audio/vowel_u.mp3",
-    caption: `The Spanish U. Always "oo" — like "food." Lips forward, consistent. Not "yoo" like "use." Not "uh" like "cup." Just: oo. Examples: "tú" — oo. "mucho" — oo. Every time.`,
+    caption: `The Spanish U. Always "oo," like "food." Lips forward, consistent. Not "yoo" like "use." Not "uh" like "cup." Just: oo. Examples: "tú": oo. "mucho": oo. Every time.`,
   },
   {
     id: "vowel_sequence",
     type: "concept",
     audioSrc: "audio/vowel_sequence.mp3",
-    caption: `Say the five vowels out loud, in order: A — ah. E — eh. I — ee. O — oh. U — oo. These five sounds are your foundation. Every Spanish word you'll ever say is built from them. From now on, when you see a vowel in a Spanish word, you already know exactly how to say it.`,
+    caption: `Say the five vowels out loud, in order: A: ah. E: eh. I: ee. O: oh. U: oo. These five sounds are your foundation. Every Spanish word you'll ever say is built from them. From now on, when you see a vowel in a Spanish word, you already know exactly how to say it.`,
+  },
+  {
+    id: "vowel_spanish",
+    type: "concept",
+    audioSrc: "audio/vowel_spanish.mp3",
+    caption: `{{es:A}}. {{es:E}}. {{es:I}}. {{es:O}}. {{es:U}}.`,
   },
 
   // ── MODULE 1: -tion → -ción ───────────────────────────────
@@ -71,7 +77,7 @@ For Spanish, you're going to unlearn it. Five sounds. Always the same.`,
     id: "concept_tion_intro",
     type: "concept",
     audioSrc: "audio/concept_tion_intro.mp3",
-    caption: `Here's your first pattern — and it's going to give you hundreds of words instantly. Any English word ending in "-tion" almost certainly exists in Spanish too. You just change the ending to "-ción." The accent mark on the ó tells you where to stress the word. That's all it does. Let's see it work.`,
+    caption: `Here's your first pattern, and it's going to give you hundreds of words instantly. Any English word ending in "-tion" almost certainly exists in Spanish too. You just change the ending to "-ción." The accent mark on the ó tells you where to stress the word. That's all it does. Let's see it work.`,
   },
   {
     id: "worked_nation",
@@ -79,7 +85,7 @@ For Spanish, you're going to unlearn it. Five sounds. Always the same.`,
     english: "nation",
     answer: "nación",
     audioSrc: "audio/worked_nation.mp3",
-    caption: `"nation" ends in "-tion," so change it to "-ción": nación. Notice the vowels: A is "ah," O is "oh." Say it: nah-SYON. The stress falls on the ó — that's what the accent mark is telling you.`,
+    caption: `"nation" ends in "-tion," so change it to "-ción": nación. Notice the vowels: A is "ah," O is "oh." Say it: nación. The stress falls on the ó. That's what the accent mark is telling you.`,
   },
   {
     id: "prompt_information",
@@ -101,11 +107,11 @@ For Spanish, you're going to unlearn it. Five sounds. Always the same.`,
     id: "concept_e_before_s",
     type: "concept",
     audioSrc: "audio/concept_e_before_s.mp3",
-    caption: `Before the next one, you need one more piece — and it explains something you've probably already noticed about Spanish.
+    caption: `Before the next one, you need one more piece, and it explains something you've probably already noticed about Spanish.
 
 Spanish words can't begin with an S followed by another consonant. The mouth doesn't do it. So whenever a word would start that way, Spanish puts an E in front of it to give the S something to lean on.
 
-That's where "España" comes from — compare English "Spain." And "español," "escuela" for school, "estudiante" for student, "especial" for special.
+That's where "España" comes from. Compare English "Spain." And "español," "escuela" for school, "estudiante" for student, "especial" for special.
 
 So if you're converting an English word that starts with S plus a consonant, you add an E before you do anything else. "Spanish" doesn't become "spañol." It becomes "español."`,
   },
@@ -123,13 +129,13 @@ So if you're converting an English word that starts with S plus a consonant, you
     id: "concept_al_intro",
     type: "concept",
     audioSrc: "audio/concept_al_intro.mp3",
-    caption: `Here's a pattern that's almost free — you don't change a single letter.
+    caption: `Here's a pattern that's almost free: you don't change a single letter.
 
 A whole family of English words ending in "-al" are spelled exactly the same in Spanish. Normal. Natural. Total. Metal. Animal. Hospital. Identical spelling.
 
 What changes is where you put the weight. In English we front-load these words: NOR-mal. TO-tal. AN-i-mal. In Spanish the stress moves to the end: {{es:normal}}. {{es:total}}. {{es:animal}}.
 
-And this isn't arbitrary. Spanish has a rule: when a word ends in a consonant other than N or S, the stress falls on the last syllable. "-al" ends in L. So the stress always pulls to that final AL — and because the rule already predicts it, no accent mark is needed.`,
+And this isn't arbitrary. Spanish has a rule: when a word ends in a consonant other than N or S, the stress falls on the last syllable. "-al" ends in L. So the stress always pulls to that final AL, and because the rule already predicts it, no accent mark is needed.`,
   },
   {
     id: "worked_normal",
@@ -137,7 +143,7 @@ And this isn't arbitrary. Spanish has a rule: when a word ends in a consonant ot
     english: "normal",
     answer: "normal",
     audioSrc: "audio/worked_normal.mp3",
-    caption: `"normal" is n-o-r-m-a-l in both languages. Not one letter changes. But listen to the difference: English says NOR-mal, weight at the front. Spanish says {{es:normal}}, weight at the end. And your vowels snap into place — O is "oh," A is "ah." {{es:normal}}.`,
+    caption: `"normal" is n-o-r-m-a-l in both languages. Not one letter changes. But listen to the difference: English says NOR-mal, weight at the front. Spanish says {{es:normal}}, weight at the end. And your vowels snap into place: O is "oh," A is "ah." {{es:normal}}.`,
   },
   {
     id: "worked_natural",
@@ -145,7 +151,7 @@ And this isn't arbitrary. Spanish has a rule: when a word ends in a consonant ot
     english: "natural",
     answer: "natural",
     audioSrc: "audio/worked_natural.mp3",
-    caption: `"natural" — same spelling again. English flattens it: NATCH-rul. Spanish gives every vowel its full value and stresses the end: {{es:natural}}. Three clean vowels — ah, oo, ah. {{es:natural}}.`,
+    caption: `"natural": same spelling again. English flattens it: NATCH-rul. Spanish gives every vowel its full value and stresses the end: {{es:natural}}. Three clean vowels: ah, oo, ah. {{es:natural}}.`,
   },
   {
     id: "prompt_metal",
@@ -179,9 +185,9 @@ And this isn't arbitrary. Spanish has a rule: when a word ends in a consonant ot
 
 The letter H is completely silent in Spanish. Always. It gets written, but it is never pronounced.
 
-"hola" is "OH-la," not "HO-la." "hora," meaning hour, is "OH-ra." "hombre," meaning man, is "OM-bre."
+"hola" has no H sound, so it is never "HO-la." "hora," meaning hour, opens on the O. "hombre," meaning man, opens on the O too.
 
-This is easier than it sounds, because English does the same thing in a handful of words you already say — "hour," "honest," "honor." Spanish just applies it to every single H.
+This is easier than it sounds, because English does the same thing in a handful of words you already say: "hour," "honest," "honor." Spanish just applies it to every single H.
 
 So when you see an H at the start of a Spanish word, your mouth skips straight to the vowel.`,
   },
@@ -199,7 +205,7 @@ So when you see an H at the start of a Spanish word, your mouth skips straight t
     id: "concept_ic_intro",
     type: "concept",
     audioSrc: "audio/concept_ic_intro.mp3",
-    caption: `Another pattern. English words ending in "-ic" become "-ico" in Spanish. This one is almost mechanical — the word usually stays the same, you just add an "o" and shift the stress. Watch.`,
+    caption: `Another pattern. English words ending in "-ic" become "-ico" in Spanish. This one is almost mechanical: the word usually stays the same, you just add an "o" and shift the stress. Watch.`,
   },
   {
     id: "worked_electric",
@@ -207,7 +213,7 @@ So when you see an H at the start of a Spanish word, your mouth skips straight t
     english: "electric",
     answer: "eléctrico",
     audioSrc: "audio/worked_electric.mp3",
-    caption: `"electric" → add "-o" to get "eléctrico." The accent on the é tells you: stress falls on the second syllable — eh-LEK-tree-koh. Vowels: E is "eh," I is "ee," O is "oh." You already know them all.`,
+    caption: `"electric" → add "-o" to get "eléctrico." The accent on the é tells you: stress falls on the second syllable: eléctrico. Vowels: E is "eh," I is "ee," O is "oh." You already know them all.`,
   },
   {
     id: "prompt_public",
@@ -231,7 +237,7 @@ So when you see an H at the start of a Spanish word, your mouth skips straight t
     id: "concept_verbs_intro",
     type: "concept",
     audioSrc: "audio/concept_verbs_intro.mp3",
-    caption: `Now let's look at verbs — how to say "I do something." Spanish verbs in their base form (the infinitive) end in -ar, -er, or -ir. For example: "hablar" means "to speak." "comer" means "to eat." To say "I" do something, you drop that infinitive ending and replace it with -o. hablar → hablo. comer → como. The -o ending always means "I."`,
+    caption: `Now let's look at verbs: how to say "I do something." Spanish verbs in their base form (the infinitive) end in -ar, -er, or -ir. For example: "hablar" means "to speak." "comer" means "to eat." To say "I" do something, you drop that infinitive ending and replace it with -o. hablar → hablo. comer → como. The -o ending always means "I."`,
   },
   {
     id: "worked_querer",
@@ -239,13 +245,13 @@ So when you see an H at the start of a Spanish word, your mouth skips straight t
     english: "I want",
     answer: "quiero",
     audioSrc: "audio/worked_querer.mp3",
-    caption: `The verb "to want" is querer. Drop the infinitive ending -er, add -o… but this verb has a small spelling change in the middle: querer → quiero. "I want" = quiero. kee-EH-roh — hear those pure vowels: ee, eh, oh.`,
+    caption: `The verb "to want" is querer. Drop the infinitive ending -er, add -o… but this verb has a small spelling change in the middle: querer → quiero. "I want" = quiero. Say it again: quiero. Hear those pure vowels: ee, eh, oh.`,
   },
   {
     id: "concept_necesitar",
     type: "concept",
     audioSrc: "audio/concept_necesitar.mp3",
-    caption: `The verb "to need" is necesitar. ne-se-si-TAR — four syllables. Say it a few times. Now apply the rule: drop -ar, add -o. necesitar → necesito. ne-se-SEE-toh. "I need."`,
+    caption: `The verb "to need" is necesitar. Four syllables. Say it a few times. Now apply the rule: drop -ar, add -o. necesitar → necesito. "I need."`,
   },
   {
     id: "prompt_necesito",
@@ -261,15 +267,15 @@ So when you see an H at the start of a Spanish word, your mouth skips straight t
     english: "I use",
     answer: "uso",
     audioSrc: "audio/worked_usar.mp3",
-    caption: `"to use" is usar. Drop -ar, add -o: uso. OO-soh. Two syllables. Clean. This is a regular -ar verb — no surprises.`,
+    caption: `"to use" is usar. Drop -ar, add -o: uso. Two syllables. Clean. This is a regular -ar verb. No surprises.`,
   },
   {
     id: "concept_hablar",
     type: "concept",
     audioSrc: "audio/concept_hablar.mp3",
-    caption: `Here's the verb you'll use more than almost any other. "To speak" is hablar. a-BLAR — and remember, that H is silent, so it opens on the A.
+    caption: `Here's the verb you'll use more than almost any other. "To speak" is hablar. Remember, that H is silent, so it opens on the A.
 
-Two syllables, stress on the end, because it ends in R — a consonant that isn't N or S. Same stress rule you learned with the -al words.
+Two syllables, stress on the end, because it ends in R, a consonant that isn't N or S. Same stress rule you learned with the -al words.
 
 Say it a few times: hablar. hablar.
 
@@ -289,7 +295,7 @@ Now you know what it means and how it sounds. Next you'll put the -o ending on i
     id: "concept_chaining",
     type: "concept",
     audioSrc: "audio/concept_chaining.mp3",
-    caption: `Here's where things get powerful. In English you can chain verbs: "I want to use." "I need to speak." Spanish works the same way — conjugate the first verb (add the -o ending), then leave the second verb in its infinitive form. "I want to use" → quiero usar. You only ever conjugate one verb in a chain. The rest stay as infinitives.`,
+    caption: `Here's where things get powerful. In English you can chain verbs: "I want to use." "I need to speak." Spanish works the same way: conjugate the first verb (add the -o ending), then leave the second verb in its infinitive form. "I want to use" → quiero usar. You only ever conjugate one verb in a chain. The rest stay as infinitives.`,
   },
   {
     id: "worked_quiero_usar",
@@ -297,7 +303,7 @@ Now you know what it means and how it sounds. Next you'll put the -o ending on i
     english: "I want to use it",
     answer: "quiero usarlo",
     audioSrc: "audio/worked_quiero_usar.mp3",
-    caption: `"I want" = quiero. "to use" = usar. To attach "it" — "lo" in Spanish — you glue it to the end of the infinitive: usar + lo = usarlo. quiero usarlo. The chain: conjugated verb + infinitive-with-pronoun.`,
+    caption: `"I want" = quiero. "to use" = usar. To attach "it" ("lo" in Spanish), you glue it to the end of the infinitive: usar + lo = usarlo. quiero usarlo. The chain: conjugated verb + infinitive-with-pronoun.`,
   },
   {
     id: "prompt_need_to_use",
@@ -381,7 +387,7 @@ function saveCC(val) {
 // ── BUILD STAMP ───────────────────────────────────────────
 // Bump this whenever behavior changes. The debug panel prints it so
 // you can tell instantly whether the browser served a cached file.
-const BUILD = "2026-10-30 · auto-advance + timeout";
+const BUILD = "2026-11-01 · azure answers";
 
 // ── TIMING ────────────────────────────────────────────────
 // Language Transfer's own recordings leave roughly 3–5s of silence
@@ -472,7 +478,9 @@ function playItem(item, onEnd) {
         navigator.mediaSession.playbackState = "playing";
       }
     })
-    .catch(() => {
+    .catch((e) => {
+      // Interrupted by a press or the next clip, not a failed file.
+      if (e.name === "AbortError") return;
       const text = item.caption || item.hint || item.english || "";
       ttsFallback(text, "en-US", onEnd);
     });
@@ -765,13 +773,47 @@ function skipReport() {
 }
 
 // Speak the Spanish answer. Replayable from the answer screen.
+// Plays through lessonAudio so it keeps working with the screen locked.
+// The token makes a superseded or cancelled run unable to call onEnd.
+let answerToken = 0;
+
 function speakAnswer(item, onEnd) {
-  if (!item || !("speechSynthesis" in window)) { onEnd && onEnd(); return; }
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(item.answer);
-  u.lang = "es-ES"; u.rate = 0.85;
-  if (onEnd) u.onend = onEnd;
-  window.speechSynthesis.speak(u);
+  if (!item) { onEnd && onEnd(); return; }
+  const token = ++answerToken;
+  const finish = () => {
+    if (token !== answerToken) return;
+    answerToken++;
+    state.audioPaused = false;
+    updateWaveform(false);
+    onEnd && onEnd();
+  };
+  let fellBack = false;
+  const fallback = () => {
+    if (token !== answerToken || fellBack) return;
+    fellBack = true;
+    // Clip missing or blocked: device voice beats no answer at all.
+    if (!("speechSynthesis" in window)) { finish(); return; }
+    const u = new SpeechSynthesisUtterance(item.answer);
+    u.lang = "es-MX"; u.rate = 0.85;
+    u.onend = finish;
+    u.onerror = finish;
+    window.speechSynthesis.speak(u);
+  };
+
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  lessonAudio.pause();
+  lessonAudio.src = `audio/answers/${item.id}.mp3`;
+  lessonAudio.onended = finish;
+  lessonAudio.onerror = fallback;
+  lessonAudio.play()
+    .then(() => { if (token === answerToken) updateWaveform(true); })
+    .catch(fallback);
+}
+
+// A response supersedes the answer clip and the "Got it?" cue that follows it.
+function cancelAnswerAudio() {
+  answerToken++;
+  stopAudio();
 }
 
 // Short spoken interface cue in English (not lesson content).
@@ -788,6 +830,7 @@ function speakCue(text, onEnd) {
 
 function rateAnswer(quality) {
   const item = state.currentItem;
+  answerToken++;
   clearPhaseTimer();
   clearTimeout(pressTimer);
   pressCount = 0;
@@ -868,6 +911,7 @@ function handleAnswerPress() {
   // The learner is responding, so cancel the no-response timeout before
   // it can fire while we're still counting presses.
   clearPhaseTimer();
+  cancelAnswerAudio();
   registerPress((n) => {
     if (n === 1) {
       speakCue("Got it.", () => rateAnswer(2));
@@ -996,6 +1040,8 @@ if ("mediaSession" in navigator) {
     dbg("⏭ MEDIA: nexttrack", state.phase === "show_answer" ? "rate YES" : "advance");
     if (state.phase === "show_answer") {
       clearTimeout(pressTimer); pressCount = 0;
+      clearPhaseTimer();
+      cancelAnswerAudio();
       speakCue("Got it.", () => rateAnswer(2));
     } else handleAdvance();
   });
@@ -1005,6 +1051,8 @@ if ("mediaSession" in navigator) {
     dbg("⏮ MEDIA: previoustrack", state.phase === "show_answer" ? "rate NO" : "replay");
     if (state.phase === "show_answer") {
       clearTimeout(pressTimer); pressCount = 0;
+      clearPhaseTimer();
+      cancelAnswerAudio();
       speakCue("We'll come back to that.", () => rateAnswer(0));
     }
     else if (state.currentItem) {

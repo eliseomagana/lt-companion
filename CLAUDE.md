@@ -41,14 +41,15 @@ HTTPS, or deploy.
 | `index.html` | Four screens: start, lesson, answer, summary. Plus the debug panel. |
 | `app.js` | Everything — lesson data, SM-2, audio engine, Media Session, input. |
 | `style.css` | Light/dark via CSS custom properties, auto-switching on `prefers-color-scheme`. |
-| `audio/*.mp3` | One clip per lesson item, Azure TTS speech (~9.7 min total). |
+| `audio/*.mp3` | One clip per lesson item, Azure TTS speech (~11.2 min total). |
+| `audio/answers/*.mp3` | One clip per `prompt`: the Spanish answer, in `es-MX-JorgeNeural`. Filename is the item id. |
 | `generate-audio.mjs` | Generates the real audio from `LESSON_ITEMS` via Azure/OpenAI TTS. |
 
 ---
 
 ## The data model
 
-`LESSON_ITEMS` in `app.js` is an ordered array of 38 items across six
+`LESSON_ITEMS` in `app.js` is an ordered array of 39 items across six
 modules. Four types:
 
 - **`concept`** — teaching audio. Has `caption`.
@@ -144,8 +145,11 @@ a hands-free app. One persistent `lessonAudio` element is reused for every
 clip, because iOS unlocks that element on first user gesture and subsequent
 `src` swaps then play without a new gesture.
 
-TTS remains only as a fallback for a missing file, and for speaking the
-Spanish answer and the English interface cues.
+The Spanish answer plays from `audio/answers/` through the same element, so
+every learner hears the same model answer and it survives screen lock.
+
+TTS remains only as a fallback for a missing file, and for the English
+interface cues ("Got it?").
 
 ### 7. Audio carries the lesson; text is secondary
 
@@ -162,6 +166,13 @@ that are also English (`no`, `total`, `normal`, `animal`, `metal`,
 `hospital`…) — without it, "**no** accent mark is needed" gets read in
 Spanish.
 
+Isolated vowel sounds (`ah`, `eh`, `ee`, `oh`, `oo`, and `{{es:A}}`-style
+letters) become exact Spanish IPA with a pause after them, so captions keep
+readable spellings while the voice gets the real sound. Write Spanish words
+in captions rather than phonetic respellings (`kee-EH-roh`), which the
+English voice misreads. Respellings of the *English* form (`NOR-mal`) stay,
+because they demonstrate the contrast.
+
 ---
 
 ## Generating audio
@@ -172,6 +183,7 @@ node generate-audio.mjs --dry      # inspect SSML, calls nothing
 node generate-audio.mjs            # generate changed items only
 node generate-audio.mjs --force    # regenerate everything
 node generate-audio.mjs --only vowel_a
+node generate-audio.mjs --answers  # answer clips only
 ```
 
 The Azure resource is F0 tier in **westus2** — East US is blocked by the
@@ -189,7 +201,8 @@ teaches the opposite of Module 0.
 
 **Do not change `TTS_EN_VOICE` / `TTS_ES_VOICE` once pilot data collection
 begins.** A voice change mid-study is a confound, and the manifest hash
-includes voice names, so changing one regenerates all 38 clips.
+includes voice names, so changing one regenerates every clip. The same goes
+for `TTS_RATE` (`-15%`, slowed because `-8%` was too fast for Andrew).
 
 ---
 
@@ -199,9 +212,9 @@ Working: full lesson flow, SM-2 scheduling in `localStorage`, light/dark
 theme, CC toggle, Media Session with hardware buttons, in-app multi-press,
 auto-advance, timeout handling with requeue, debug panel.
 
-Audio: all 38 clips are Azure speech — `en-US-AndrewMultilingualNeural`
+Audio: all 39 clips are Azure speech — `en-US-AndrewMultilingualNeural`
 with `<lang xml:lang="es-MX">` spans (no nested `<voice>`; Azure rejects
-it). Pronunciation not yet reviewed by ear.
+it). Answers use `es-MX-JorgeNeural`.
 
 Deployed: https://eliseomagana.github.io/lt-companion/ from `main` / root
 (repo github.com/eliseomagana/lt-companion, public). Push to `main` redeploys.
