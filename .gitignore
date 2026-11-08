@@ -8,6 +8,12 @@
 *credential*
 keys/
 
-node_modules/
-.DS_Store
+# Scratch audio from pronunciation experiments
+audio-test/
+
+# OS / editor noise
 Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+node_modules/
