@@ -92,10 +92,32 @@ const NEVER_AUTO = new Set([
 ]);
 
 // Manual override, for the cases the heuristic can't resolve:
-//   {{es:palabra}}  force Spanish      {{en:word}}  force English
+//   {{es:palabra}}        force Spanish      {{en:word}}  force English
+//   {{ipa:shown|ipa}}     say exact Spanish IPA, show `shown`
+//   {{say:shown|spoken}}  say `spoken` (English), show `shown`
 // Use these inside a caption whenever an identical spelling needs a
 // specific language, e.g. contrasting English "normal" with Spanish "normal".
-const OVERRIDE_RE = /\{\{(es|en):([^}]+)\}\}/gi;
+// app.js's stripLangMarkers() must accept every form listed here.
+const OVERRIDE_RE = /\{\{(es|en|ipa|say):([^}|]+)(?:\|([^}]+))?\}\}/gi;
+
+// ── Pronunciation dictionary ─────────────────────────────────────────
+// pronunciations.json fixes a spelling everywhere it appears, e.g. "-ción",
+// which the English voice read as "cyan". Each entry is
+//   { "match": "-ción", "lang": "es", "ipa": "sjon" }   exact sound
+//   { "match": "→", "say": "becomes" }                   spoken substitute
+// Edit it by hand or in the review tool (node review.mjs).
+const PRONUNCIATIONS = path.join(ROOT, "pronunciations.json");
+
+function loadPronunciations() {
+  try { return JSON.parse(fs.readFileSync(PRONUNCIATIONS, "utf8")); } catch { return []; }
+}
+
+const escapeAttr = (s) => escapeXml(s).replace(/"/g, "&quot;");
+
+function phonemeSsml(text, ipa, lang = "es") {
+  return `<lang xml:lang="${lang === "en" ? "en-US" : "es-MX"}">`
+       + `<phoneme alphabet="ipa" ph="${escapeAttr(ipa)}">${text}</phoneme></lang>`;
+}
 
 // ── Spanish glossary ──────────────────────────────────────────────────
 // Words that must be spoken with Spanish phonetics even inside an English
@@ -134,24 +156,36 @@ function escapeXml(s) {
 // Wrap each Spanish term in <lang>. Longest-first so "necesitar" is matched
 // before "necesito" can partially claim it. Placeholders prevent the tags
 // themselves from being re-scanned.
-function markupSpanish(text, glossary) {
+function markupSpanish(text, glossary, dictionary = []) {
   const sorted = [...new Set(glossary)]
     .filter((w) => w.length >= 3 && !NEVER_AUTO.has(w.toLowerCase()))
     .sort((a, b) => b.length - a.length);
   const slots = [];
+  const slot = (ssml) => `\u0000${slots.push(ssml) - 1}\u0000`;
   let out = escapeXml(text);
 
   // Explicit overrides win and are locked in before auto-tagging runs,
   // so the heuristic can't touch or double-wrap them.
-  out = out.replace(OVERRIDE_RE, (_, lang, inner) => {
-    const token = `\u0000${slots.length}\u0000`;
-    slots.push(
-      lang.toLowerCase() !== "es" ? `<lang xml:lang="en-US">${inner}</lang>`
-      : VOWEL_LETTERS.has(inner) ? vowelSsml(inner, inner.toLowerCase(), PAUSE_LONG)
-      : `<lang xml:lang="es-MX">${inner}</lang>`
-    );
-    return token;
+  out = out.replace(OVERRIDE_RE, (_, kind, inner, extra) => {
+    kind = kind.toLowerCase();
+    if (kind === "ipa") return slot(phonemeSsml(inner, extra || inner));
+    if (kind === "say") return slot(`<sub alias="${escapeAttr(extra || inner)}">${inner}</sub>`);
+    if (kind === "en") return slot(`<lang xml:lang="en-US">${inner}</lang>`);
+    return slot(VOWEL_LETTERS.has(inner)
+      ? vowelSsml(inner, inner.toLowerCase(), PAUSE_LONG)
+      : `<lang xml:lang="es-MX">${inner}</lang>`);
   });
+
+  // Dictionary next, longest match first so "-ción" beats "-o".
+  for (const entry of [...dictionary].sort((a, b) => b.match.length - a.match.length)) {
+    const re = new RegExp(
+      `(?<![\\p{L}\\p{M}])${escapeXml(entry.match).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\p{L}\\p{M}])`,
+      "gu"
+    );
+    out = out.replace(re, (hit) => slot(entry.say
+      ? `<sub alias="${escapeAttr(entry.say)}">${hit}</sub>`
+      : phonemeSsml(hit, entry.ipa, entry.lang)));
+  }
 
   out = out.replace(VOWEL_RE, (hit, _sound, offset, whole) => {
     const token = `\u0000${slots.length}\u0000`;
@@ -178,8 +212,8 @@ function markupSpanish(text, glossary) {
   return out.replace(/\u0000(\d+)\u0000/g, (_, i) => slots[+i]);
 }
 
-function buildSsml(item, glossary) {
-  const body = markupSpanish(scriptFor(item), glossary);
+function buildSsml(item, glossary, dictionary) {
+  const body = markupSpanish(scriptFor(item), glossary, dictionary);
   return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" `
        + `xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-US">`
        + `<voice name="${EN_VOICE}"><prosody rate="${RATE}">${body}</prosody></voice>`
@@ -189,7 +223,7 @@ function buildSsml(item, glossary) {
 // Spoken interface cues. They play through lessonAudio like everything else,
 // because device speech goes silent once the screen locks.
 const UI_CUES = {
-  got_it_q:  "Got it?",
+  how_did_you_do: "How'd you do?",
   got_it:    "Got it.",
   come_back: "We'll come back to that.",
 };
@@ -250,14 +284,22 @@ async function synthOpenAI(_ssml, plainText) {
   return Buffer.from(await res.arrayBuffer());
 }
 
-// ── Main ──────────────────────────────────────────────────────────────
-const items = loadItems();
-
 // Every answer is Spanish by definition; fold those into the glossary.
-const glossary = [
-  ...EXTRA_SPANISH,
-  ...items.flatMap((i) => (i.answer ? i.answer.split(/\s+/) : [])),
-].filter((w) => w && w.length > 1);
+function makeGlossary(items) {
+  return [
+    ...EXTRA_SPANISH,
+    ...items.flatMap((i) => (i.answer ? i.answer.split(/\s+/) : [])),
+  ].filter((w) => w && w.length > 1);
+}
+
+// The review tool imports these to preview SSML exactly as it will be sent.
+export { ROOT, loadItems, makeGlossary, loadPronunciations, buildSsml, buildAnswerSsml };
+
+// ── Main ──────────────────────────────────────────────────────────────
+async function main() {
+const items = loadItems();
+const glossary = makeGlossary(items);
+const dictionary = loadPronunciations();
 
 let manifest = {};
 try { manifest = JSON.parse(fs.readFileSync(MANIFEST, "utf8")); } catch {}
@@ -274,7 +316,7 @@ const jobs = [
     id: item.id,
     key: item.id,
     plain: scriptFor(item),
-    ssml: buildSsml(item, glossary),
+    ssml: buildSsml(item, glossary, dictionary),
     dest: path.join(AUDIO_DIR, `${item.id}.mp3`),
   }))),
   ...items.filter((item) => item.type === "prompt").map((item) => ({
@@ -329,4 +371,10 @@ if (!DRY) {
   fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 2));
   console.log(`\n${made} generated · ${skipped} unchanged · ${failed} failed`);
   if (failed) process.exitCode = 1;
+}
+}
+
+// Run only when executed directly, not when imported by review.mjs.
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  await main();
 }

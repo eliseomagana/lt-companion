@@ -1,0 +1,15 @@
+[
+  { "match": "-ción", "lang": "es", "ipa": "sjon", "note": "English voice read it as \"cyan\"" },
+  { "match": "-tion", "lang": "en", "ipa": "ʃən" },
+  { "match": "-ico", "lang": "es", "ipa": "iko" },
+  { "match": "-ic", "lang": "en", "ipa": "ɪk" },
+  { "match": "-ar", "lang": "es", "ipa": "aɾ" },
+  { "match": "-er", "lang": "es", "ipa": "eɾ" },
+  { "match": "-ir", "lang": "es", "ipa": "iɾ" },
+  { "match": "-o", "lang": "es", "ipa": "o" },
+  { "match": "ó", "lang": "es", "ipa": "o" },
+  { "match": "é", "lang": "es", "ipa": "e" },
+  { "match": "→", "say": "becomes" },
+  { "match": "=", "say": "is" },
+  { "match": "+", "say": "plus" }
+]

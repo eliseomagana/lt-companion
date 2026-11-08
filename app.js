@@ -360,10 +360,11 @@ One word, in front, no rearranging. When you hear "don't" in English, just reach
 
 const PROMPT_ITEMS = LESSON_ITEMS.filter((i) => i.type === "prompt");
 
-// Captions embed {{es:…}} / {{en:…}} markers that tell the audio generator
-// which language to pronounce a span in. They must never reach the screen.
+// Captions embed {{es:…}} / {{en:…}} / {{ipa:shown|…}} / {{say:shown|…}}
+// markers that tell the audio generator how to pronounce a span. Only the
+// shown text may reach the screen.
 function stripLangMarkers(text) {
-  return String(text).replace(/\{\{(?:es|en):([^}]*)\}\}/gi, "$1");
+  return String(text).replace(/\{\{(?:es|en|ipa|say):([^}|]*)(?:\|[^}]*)?\}\}/gi, "$1");
 }
 
 // ── SM-2 SPACED REPETITION ────────────────────────────────
@@ -397,10 +398,25 @@ function saveCC(val) {
   try { localStorage.setItem("lt_cc", val ? "on" : "off"); } catch {}
 }
 
+// ── PLAYBACK SPEED ────────────────────────────────────────
+// Applies to lesson clips only. The Spanish answer stays at its natural
+// pace (it's the model to imitate), cues stay put, and the wait sound must
+// never change speed because its length is the timeout.
+const SPEEDS = [0.8, 0.9, 1, 1.1, 1.25];
+function loadSpeed() {
+  try {
+    const v = Number(localStorage.getItem("lt_speed"));
+    return SPEEDS.includes(v) ? v : 1;
+  } catch { return 1; }
+}
+function saveSpeed(v) {
+  try { localStorage.setItem("lt_speed", String(v)); } catch {}
+}
+
 // ── BUILD STAMP ───────────────────────────────────────────
 // Bump this whenever behavior changes. The debug panel prints it so
 // you can tell instantly whether the browser served a cached file.
-const BUILD = "2026-11-08 · audio cues + wait sound + modules";
+const BUILD = "2026-11-08 · speed toggle + pronunciation fixes";
 
 // ── TIMING ────────────────────────────────────────────────
 // Language Transfer's own recordings leave roughly 3–5s of silence
@@ -481,6 +497,8 @@ function playItem(item, onEnd) {
   lessonAudio.currentTime = 0;
 
   lessonAudio.src = item.audioSrc;
+  setRate(state.speed);
+  state.lessonClip = true;
 
   lessonAudio.onended = () => {
     state.audioPaused = false;
@@ -508,6 +526,12 @@ function playItem(item, onEnd) {
       const text = item.caption || item.hint || item.english || "";
       ttsFallback(text, "en-US", onEnd);
     });
+}
+
+// Loading a new src resets playbackRate to defaultPlaybackRate, so set both.
+function setRate(r) {
+  lessonAudio.defaultPlaybackRate = r;
+  lessonAudio.playbackRate = r;
 }
 
 function stopAudio() {
@@ -539,6 +563,8 @@ const state = {
   ccOn: loadCC(),
   audioPaused: false,   // true while user has manually paused mid-item
   waiting: false,       // true while the wait sound times a response window
+  speed: loadSpeed(),   // lesson-clip playback rate
+  lessonClip: false,    // true while lessonAudio holds a lesson clip
   modulesFrom: "start", // screen to return to when leaving the modules list
 };
 
@@ -562,6 +588,7 @@ const els = {
   ccPanel:         document.getElementById("cc-panel"),
   ccText:          document.getElementById("cc-text"),
   ccToggle:        document.getElementById("btn-cc"),
+  speedBtn:        document.getElementById("btn-speed"),
   tapZone:         document.getElementById("tap-zone"),
   tapInstruction:  document.getElementById("tap-instruction"),
   progressBar:     document.getElementById("progress-bar"),
@@ -598,6 +625,21 @@ function applyCC() {
   els.ccToggle.classList.toggle("cc-active", state.ccOn);
   els.ccToggle.setAttribute("aria-pressed", state.ccOn);
 }
+
+// ── SPEED TOGGLE ─────────────────────────────────────────
+// One button that steps through SPEEDS and wraps around.
+function applySpeed() {
+  els.speedBtn.textContent = `${state.speed}×`;
+  els.speedBtn.setAttribute("aria-label", `Lesson speed ${state.speed}×. Tap to change.`);
+  if (state.lessonClip) setRate(state.speed);
+}
+
+els.speedBtn.addEventListener("click", () => {
+  state.speed = SPEEDS[(SPEEDS.indexOf(state.speed) + 1) % SPEEDS.length];
+  saveSpeed(state.speed);
+  dbg("⏩ speed", `${state.speed}×`);
+  applySpeed();
+});
 
 els.ccToggle.addEventListener("click", () => {
   state.ccOn = !state.ccOn;
@@ -803,7 +845,7 @@ function revealAnswer(opts) {
 // is left unassessed and simply returns.
 function awaitReport() {
   const item = state.currentItem;
-  playCue("got_it_q", () => {
+  playCue("how_did_you_do", () => {
     startWait("report", REPORT_TIMEOUT, () => {
       dbg("⏰ report timeout", item.id + " — no rating recorded");
       skipReport();
@@ -822,6 +864,7 @@ function skipReport() {
     quality: null,
     latencyMs: null,
     outcome: state._pendingTimedOut ? "no_attempt" : "no_report",
+    speed: state.speed,
   });
   dbg("○ no response", `${item.id} — SM-2 untouched`);
   requeueItem(item);
@@ -838,7 +881,7 @@ function skipReport() {
 let clipToken = 0;
 
 const CUE_TEXT = {
-  got_it_q:  "Got it?",
+  how_did_you_do: "How'd you do?",
   got_it:    "Got it.",
   come_back: "We'll come back to that.",
 };
@@ -874,6 +917,8 @@ function playClip(src, opts) {
   window.speechSynthesis && window.speechSynthesis.cancel();
   lessonAudio.pause();
   lessonAudio.src = src;
+  setRate(1);
+  state.lessonClip = false;
   lessonAudio.onended = finish;
   lessonAudio.onerror = fallback;
   lessonAudio.play()
@@ -929,6 +974,9 @@ function rateAnswer(quality) {
     // Rated after a timed-out prompt: the rating stands, but there is no
     // usable latency, so it must stay out of the timing analysis.
     outcome: state._pendingTimedOut ? "rated_no_attempt" : "rated",
+    // Lesson speed is the learner's choice, so it travels with each result:
+    // a slowed-down lesson is a different exposure.
+    speed: state.speed,
   });
   showScreen("lesson");
   nextItem();
@@ -1311,6 +1359,7 @@ document.addEventListener("visibilitychange", () =>
 (function init() {
   updateContinueBtn();
   applyCC();
+  applySpeed();
 
   if (DEBUG) {
     document.getElementById("debug-panel").classList.add("debug-on");

@@ -43,10 +43,13 @@ HTTPS, or deploy.
 | `style.css` | Light/dark via CSS custom properties, auto-switching on `prefers-color-scheme`. |
 | `audio/*.mp3` | One clip per lesson item, Azure TTS speech (~11.2 min total). |
 | `audio/answers/*.mp3` | One clip per `prompt`: the Spanish answer, in `es-MX-JorgeNeural`. Filename is the item id. |
-| `audio/ui/cue_*.mp3` | Spoken interface cues ("Got it?", "Got it.", "We'll come back to that."). |
+| `audio/ui/cue_*.mp3` | Spoken interface cues ("How'd you do?", "Got it.", "We'll come back to that."). |
 | `audio/ui/wait_*.wav` | The soft wait sound for each response window. Its length *is* the timeout. |
 | `generate-audio.mjs` | Generates the real audio from `LESSON_ITEMS` via Azure/OpenAI TTS, plus the cues. |
 | `generate-sounds.mjs` | Synthesizes the wait sounds locally. No API. |
+| `pronunciations.json` | Pronunciation dictionary: fixes a written fragment everywhere it's spoken. |
+| `review.mjs` | Local review tool: listen, see the SSML, edit scripts, regenerate one clip. |
+| `review-notes.json` | Per-item review status and notes, written by the review tool. |
 
 ---
 
@@ -175,8 +178,20 @@ can only be read.
 ### 8. Captions carry language markers
 
 `{{es:...}}` and `{{en:...}}` force pronunciation language in the audio
-generator. `stripLangMarkers()` **must** run before any caption reaches the
-screen. Auto-tagging uses a glossary plus a `NEVER_AUTO` stoplist for words
+generator; `{{ipa:shown|ipa}}` gives an exact Spanish sound and
+`{{say:shown|spoken}}` speaks a substitute, each showing only `shown`.
+`stripLangMarkers()` **must** run before any caption reaches the screen,
+and must accept every marker form the generator's `OVERRIDE_RE` does.
+
+The English voice mangles bare fragments: `"-ción"` came out as "cyan".
+`pronunciations.json` fixes a fragment everywhere it appears (whole
+fragments only, never inside a word), so prefer an entry there over
+marking up each caption. `→`, `=`, `+` are entries too ("becomes", "is",
+"plus").
+
+Write captions for a listener. Several still lean on reading ("the accent
+mark on the ó", "spelled exactly the same", "when you see an H"); they're
+flagged with suggested rewrites in `review-notes.json`. Auto-tagging uses a glossary plus a `NEVER_AUTO` stoplist for words
 that are also English (`no`, `total`, `normal`, `animal`, `metal`,
 `hospital`…) — without it, "**no** accent mark is needed" gets read in
 Spanish.
@@ -200,7 +215,13 @@ node generate-audio.mjs --force    # regenerate everything
 node generate-audio.mjs --only vowel_a
 node generate-audio.mjs --answers  # answer clips only
 node generate-sounds.mjs           # wait sounds; rerun after changing a timeout
+node --env-file=.env review.mjs    # review tool at http://127.0.0.1:5500
 ```
+
+The review tool edits `caption`/`english`/`answer`/`hint` in `app.js` by
+replacing one field in one item, re-parsing, and restoring the file if the
+value doesn't round-trip. Regeneration runs the real generator, so the
+manifest stays authoritative.
 
 The Azure resource is F0 tier in **westus2** — East US is blocked by the
 Azure for Students region policy, so don't "fix" the region back. Keys can
@@ -229,7 +250,9 @@ theme, CC toggle, Media Session with hardware buttons, in-app multi-press,
 auto-advance, timeout handling with requeue, debug panel. Modules screen
 (collapsible modules and items; start from any module or item; the session
 runs on from there). "Continue" resumes from `lt_position`, the furthest
-new item reached, reset when a session finishes.
+new item reached, reset when a session finishes. Speed button steps lesson
+clips through 0.8–1.25× (`lt_speed`); answers, cues and the wait sound
+always play at 1×, and every result records `speed`.
 
 Skipping ahead in the modules list can break invariant 2 for that learner:
 a later prompt may need a rule they skipped. The screen says so. For pilot
