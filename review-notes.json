@@ -1,38 +1,38 @@
 {
   "vowel_sequence": {
-    "status": "flagged",
-    "note": "Assumes reading: \"when you see a vowel in a Spanish word\". Suggest: \"From now on, every vowel you hear in a Spanish word is one of these five.\""
+    "status": "needs_work",
+    "note": "Audio-only rewrite applied 2026-11-08 (was \"when you see a vowel in a Spanish word\"). Listen to confirm."
   },
   "concept_tion_intro": {
-    "status": "flagged",
-    "note": "Assumes reading: \"The accent mark on the ó tells you where to stress the word. That's all it does.\" A listener never sees the ó. Suggest: \"The stress always lands on that ending: -ción.\""
+    "status": "needs_work",
+    "note": "Audio-only rewrite applied 2026-11-08 (was \"The accent mark on the ó tells you where to stress the word\"). Listen to confirm, including -ción as /sjon/."
   },
   "worked_nation": {
-    "status": "flagged",
-    "note": "Assumes reading: \"The stress falls on the ó. That's what the accent mark is telling you.\" Suggest: \"The stress falls on the end: nación.\""
+    "status": "needs_work",
+    "note": "Audio-only rewrite applied 2026-11-08 (was \"That's what the accent mark is telling you\"). Listen to confirm, including -ción as /sjon/."
   },
   "concept_al_intro": {
-    "status": "flagged",
-    "note": "Spelling-based: \"you don't change a single letter\", \"spelled exactly the same\", \"Identical spelling\", \"no accent mark is needed\". Suggest \"it's the same word in Spanish\" and ending the last paragraph at \"the stress always pulls to that final AL.\""
+    "status": "needs_work",
+    "note": "Audio-only rewrite applied 2026-11-08 (was \"you don't change a single letter\", \"spelled exactly the same\", \"Identical spelling\", \"no accent mark is needed\"). Listen to confirm."
   },
   "worked_normal": {
-    "status": "flagged",
-    "note": "Spelling-based: \"n-o-r-m-a-l in both languages. Not one letter changes.\" Suggest: \"normal is the same word in both languages.\""
+    "status": "needs_work",
+    "note": "Audio-only rewrite applied 2026-11-08 (was \"n-o-r-m-a-l in both languages. Not one letter changes.\"). Listen to confirm."
   },
   "worked_natural": {
-    "status": "flagged",
-    "note": "Spelling-based: \"same spelling again\". Suggest: \"the same word again\"."
+    "status": "needs_work",
+    "note": "Audio-only rewrite applied 2026-11-08 (was \"same spelling again\"). Listen to confirm."
   },
   "concept_silent_h": {
-    "status": "flagged",
-    "note": "Assumes reading: \"It gets written, but it is never pronounced\" and \"when you see an H at the start of a Spanish word\". A listener only ever hears the vowel. Suggest closing with: \"So when an English word starts with H, like hospital, the Spanish version starts straight on the vowel.\""
+    "status": "needs_work",
+    "note": "Audio-only rewrite applied 2026-11-08 (was \"It gets written, but it is never pronounced\" and \"when you see an H at the start of a Spanish word\"). The closing line no longer uses hospital as its example, since prompt_hospital comes next. Listen to confirm."
   },
   "worked_electric": {
-    "status": "flagged",
-    "note": "Assumes reading: \"The accent on the é tells you\". Also the arrow: \"electric\" → add \"-o\" will be spoken \"electric becomes add o\". Suggest: \"electric: add an o to the end, and you get eléctrico. The stress falls on the second syllable: eléctrico.\""
+    "status": "needs_work",
+    "note": "Audio-only rewrite applied 2026-11-08 (was \"electric\" → add \"-o\", which the dictionary would speak as \"electric becomes add o\", and \"The accent on the é tells you\"). Listen to confirm."
   },
   "worked_querer": {
-    "status": "flagged",
-    "note": "Spelling-based: \"a small spelling change in the middle\". Suggest: \"a small sound change in the middle\"."
+    "status": "needs_work",
+    "note": "Audio-only rewrite applied 2026-11-08 (was \"a small spelling change\"). Listen to confirm."
   }
 }

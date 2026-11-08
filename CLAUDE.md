@@ -189,12 +189,16 @@ fragments only, never inside a word), so prefer an entry there over
 marking up each caption. `→`, `=`, `+` are entries too ("becomes", "is",
 "plus").
 
-Write captions for a listener. Several still lean on reading ("the accent
-mark on the ó", "spelled exactly the same", "when you see an H"); they're
-flagged with suggested rewrites in `review-notes.json`. Auto-tagging uses a glossary plus a `NEVER_AUTO` stoplist for words
-that are also English (`no`, `total`, `normal`, `animal`, `metal`,
+Auto-tagging uses a glossary plus a `NEVER_AUTO` stoplist for words that
+are also English (`no`, `total`, `normal`, `animal`, `metal`,
 `hospital`…) — without it, "**no** accent mark is needed" gets read in
 Spanish.
+
+**Write captions for a listener.** The learner never sees the text, so
+don't refer to accent marks, spelling, letters, or "when you see". Nine
+captions that did ("the accent mark on the ó", "spelled exactly the
+same", "when you see an H") were rewritten; `review-notes.json` records
+the originals.
 
 Isolated vowel sounds (`ah`, `eh`, `ee`, `oh`, `oo`, and `{{es:A}}`-style
 letters) become exact Spanish IPA with a pause after them, so captions keep

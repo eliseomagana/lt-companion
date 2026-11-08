@@ -65,7 +65,7 @@ For Spanish, you're going to unlearn it. Five sounds. Always the same.`,
     title: "All five, in order",
     type: "concept",
     audioSrc: "audio/vowel_sequence.mp3",
-    caption: `Say the five vowels out loud, in order: A: ah. E: eh. I: ee. O: oh. U: oo. These five sounds are your foundation. Every Spanish word you'll ever say is built from them. From now on, when you see a vowel in a Spanish word, you already know exactly how to say it.`,
+    caption: `Say the five vowels out loud, in order: A: ah. E: eh. I: ee. O: oh. U: oo. These five sounds are your foundation. Every Spanish word you'll ever say is built from them. From now on, every vowel you hear in a Spanish word is one of these five.`,
   },
   {
     id: "vowel_spanish",
@@ -81,7 +81,7 @@ For Spanish, you're going to unlearn it. Five sounds. Always the same.`,
     title: "-tion becomes -ción",
     type: "concept",
     audioSrc: "audio/concept_tion_intro.mp3",
-    caption: `Here's your first pattern, and it's going to give you hundreds of words instantly. Any English word ending in "-tion" almost certainly exists in Spanish too. You just change the ending to "-ción." The accent mark on the ó tells you where to stress the word. That's all it does. Let's see it work.`,
+    caption: `Here's your first pattern, and it's going to give you hundreds of words instantly. Any English word ending in "-tion" almost certainly exists in Spanish too. You just change the ending to "-ción." The stress always lands on that ending: "-ción." Let's see it work.`,
   },
   {
     id: "worked_nation",
@@ -89,7 +89,7 @@ For Spanish, you're going to unlearn it. Five sounds. Always the same.`,
     english: "nation",
     answer: "nación",
     audioSrc: "audio/worked_nation.mp3",
-    caption: `"nation" ends in "-tion," so change it to "-ción": nación. Notice the vowels: A is "ah," O is "oh." Say it: nación. The stress falls on the ó. That's what the accent mark is telling you.`,
+    caption: `"nation" ends in "-tion," so change it to "-ción": nación. Notice the vowels: A is "ah," O is "oh." Say it: nación. The stress falls on the end: nación.`,
   },
   {
     id: "prompt_information",
@@ -135,13 +135,13 @@ So if you're converting an English word that starts with S plus a consonant, you
     title: "-al words: the stress moves to the end",
     type: "concept",
     audioSrc: "audio/concept_al_intro.mp3",
-    caption: `Here's a pattern that's almost free: you don't change a single letter.
+    caption: `Here's a pattern that's almost free: the word doesn't change at all.
 
-A whole family of English words ending in "-al" are spelled exactly the same in Spanish. Normal. Natural. Total. Metal. Animal. Hospital. Identical spelling.
+A whole family of English words ending in "-al" are the same words in Spanish. Normal. Natural. Total. Metal. Animal. Hospital. Same words.
 
 What changes is where you put the weight. In English we front-load these words: NOR-mal. TO-tal. AN-i-mal. In Spanish the stress moves to the end: {{es:normal}}. {{es:total}}. {{es:animal}}.
 
-And this isn't arbitrary. Spanish has a rule: when a word ends in a consonant other than N or S, the stress falls on the last syllable. "-al" ends in L. So the stress always pulls to that final AL, and because the rule already predicts it, no accent mark is needed.`,
+And this isn't arbitrary. Spanish has a rule: when a word ends in a consonant other than N or S, the stress falls on the last syllable. "-al" ends in L. So the stress always pulls to that final AL.`,
   },
   {
     id: "worked_normal",
@@ -149,7 +149,7 @@ And this isn't arbitrary. Spanish has a rule: when a word ends in a consonant ot
     english: "normal",
     answer: "normal",
     audioSrc: "audio/worked_normal.mp3",
-    caption: `"normal" is n-o-r-m-a-l in both languages. Not one letter changes. But listen to the difference: English says NOR-mal, weight at the front. Spanish says {{es:normal}}, weight at the end. And your vowels snap into place: O is "oh," A is "ah." {{es:normal}}.`,
+    caption: `"normal" is the same word in both languages. But listen to the difference: English says NOR-mal, weight at the front. Spanish says {{es:normal}}, weight at the end. And your vowels snap into place: O is "oh," A is "ah." {{es:normal}}.`,
   },
   {
     id: "worked_natural",
@@ -157,7 +157,7 @@ And this isn't arbitrary. Spanish has a rule: when a word ends in a consonant ot
     english: "natural",
     answer: "natural",
     audioSrc: "audio/worked_natural.mp3",
-    caption: `"natural": same spelling again. English flattens it: NATCH-rul. Spanish gives every vowel its full value and stresses the end: {{es:natural}}. Three clean vowels: ah, oo, ah. {{es:natural}}.`,
+    caption: `"natural": the same word again. English flattens it: NATCH-rul. Spanish gives every vowel its full value and stresses the end: {{es:natural}}. Three clean vowels: ah, oo, ah. {{es:natural}}.`,
   },
   {
     id: "prompt_metal",
@@ -190,13 +190,13 @@ And this isn't arbitrary. Spanish has a rule: when a word ends in a consonant ot
     audioSrc: "audio/concept_silent_h.mp3",
     caption: `One more thing before the next word, and it's a rule with no exceptions.
 
-The letter H is completely silent in Spanish. Always. It gets written, but it is never pronounced.
+The letter H is completely silent in Spanish. Always. Spanish keeps the H in its words, but you never hear it.
 
 "hola" has no H sound, so it is never "HO-la." "hora," meaning hour, opens on the O. "hombre," meaning man, opens on the O too.
 
 This is easier than it sounds, because English does the same thing in a handful of words you already say: "hour," "honest," "honor." Spanish just applies it to every single H.
 
-So when you see an H at the start of a Spanish word, your mouth skips straight to the vowel.`,
+So when an English word starts with H, the Spanish version starts straight on the vowel.`,
   },
   {
     id: "prompt_hospital",
@@ -221,7 +221,7 @@ So when you see an H at the start of a Spanish word, your mouth skips straight t
     english: "electric",
     answer: "eléctrico",
     audioSrc: "audio/worked_electric.mp3",
-    caption: `"electric" → add "-o" to get "eléctrico." The accent on the é tells you: stress falls on the second syllable: eléctrico. Vowels: E is "eh," I is "ee," O is "oh." You already know them all.`,
+    caption: `"electric": add an "o" to the end, and you get eléctrico. The stress falls on the second syllable: eléctrico. Vowels: E is "eh," I is "ee," O is "oh." You already know them all.`,
   },
   {
     id: "prompt_public",
@@ -254,7 +254,7 @@ So when you see an H at the start of a Spanish word, your mouth skips straight t
     english: "I want",
     answer: "quiero",
     audioSrc: "audio/worked_querer.mp3",
-    caption: `The verb "to want" is querer. Drop the infinitive ending -er, add -o… but this verb has a small spelling change in the middle: querer → quiero. "I want" = quiero. Say it again: quiero. Hear those pure vowels: ee, eh, oh.`,
+    caption: `The verb "to want" is querer. Drop the infinitive ending -er, add -o… but this verb has a small sound change in the middle: querer → quiero. "I want" = quiero. Say it again: quiero. Hear those pure vowels: ee, eh, oh.`,
   },
   {
     id: "concept_necesitar",
@@ -416,7 +416,7 @@ function saveSpeed(v) {
 // ── BUILD STAMP ───────────────────────────────────────────
 // Bump this whenever behavior changes. The debug panel prints it so
 // you can tell instantly whether the browser served a cached file.
-const BUILD = "2026-11-08 · speed toggle + pronunciation fixes";
+const BUILD = "2026-11-08 · audio-only script rewrites";
 
 // ── TIMING ────────────────────────────────────────────────
 // Language Transfer's own recordings leave roughly 3–5s of silence
