@@ -38,12 +38,15 @@ HTTPS, or deploy.
 
 | File | Role |
 |---|---|
-| `index.html` | Four screens: start, lesson, answer, summary. Plus the debug panel. |
+| `index.html` | Five screens: start, lesson, answer, modules, summary. Plus the debug panel. |
 | `app.js` | Everything — lesson data, SM-2, audio engine, Media Session, input. |
 | `style.css` | Light/dark via CSS custom properties, auto-switching on `prefers-color-scheme`. |
 | `audio/*.mp3` | One clip per lesson item, Azure TTS speech (~11.2 min total). |
 | `audio/answers/*.mp3` | One clip per `prompt`: the Spanish answer, in `es-MX-JorgeNeural`. Filename is the item id. |
-| `generate-audio.mjs` | Generates the real audio from `LESSON_ITEMS` via Azure/OpenAI TTS. |
+| `audio/ui/cue_*.mp3` | Spoken interface cues ("Got it?", "Got it.", "We'll come back to that."). |
+| `audio/ui/wait_*.wav` | The soft wait sound for each response window. Its length *is* the timeout. |
+| `generate-audio.mjs` | Generates the real audio from `LESSON_ITEMS` via Azure/OpenAI TTS, plus the cues. |
+| `generate-sounds.mjs` | Synthesizes the wait sounds locally. No API. |
 
 ---
 
@@ -145,11 +148,23 @@ a hands-free app. One persistent `lessonAudio` element is reused for every
 clip, because iOS unlocks that element on first user gesture and subsequent
 `src` swaps then play without a new gesture.
 
-The Spanish answer plays from `audio/answers/` through the same element, so
-every learner hears the same model answer and it survives screen lock.
+This applies to **everything** the learner hears, not just lessons. The
+Spanish answer (`audio/answers/`), the spoken cues (`audio/ui/cue_*`) and
+the wait sound all play through `lessonAudio`. Device TTS went silent on a
+locked phone and, worse, any gap in playback let the OS drop the media
+controls, leaving a hands-free learner unable to self-report at all.
 
-TTS remains only as a fallback for a missing file, and for the English
-interface cues ("Got it?").
+The wait sound is the other half of that: a quiet pad with a soft chime
+three seconds before time is up. It keeps the media session alive while the
+app waits, tells the learner time is running out without a ticking-clock
+pressure, and **its `ended` event is the timeout** (a `setTimeout` backstop
+fires 1.5s later only if the track can't play). Background timers on a
+locked phone can be delayed; audio events can't. So: **change
+`PROMPT_TIMEOUT` or `REPORT_TIMEOUT` → rerun `node generate-sounds.mjs`**, or
+the track and the timeout disagree. While it plays, `state.waiting` is true
+and `isAudioPlaying()` reports false, so a press answers instead of pausing.
+
+TTS remains only as a fallback when a file fails to load.
 
 ### 7. Audio carries the lesson; text is secondary
 
@@ -184,6 +199,7 @@ node generate-audio.mjs            # generate changed items only
 node generate-audio.mjs --force    # regenerate everything
 node generate-audio.mjs --only vowel_a
 node generate-audio.mjs --answers  # answer clips only
+node generate-sounds.mjs           # wait sounds; rerun after changing a timeout
 ```
 
 The Azure resource is F0 tier in **westus2** — East US is blocked by the
@@ -210,7 +226,14 @@ for `TTS_RATE` (`-15%`, slowed because `-8%` was too fast for Andrew).
 
 Working: full lesson flow, SM-2 scheduling in `localStorage`, light/dark
 theme, CC toggle, Media Session with hardware buttons, in-app multi-press,
-auto-advance, timeout handling with requeue, debug panel.
+auto-advance, timeout handling with requeue, debug panel. Modules screen
+(collapsible modules and items; start from any module or item; the session
+runs on from there). "Continue" resumes from `lt_position`, the furthest
+new item reached, reset when a session finishes.
+
+Skipping ahead in the modules list can break invariant 2 for that learner:
+a later prompt may need a rule they skipped. The screen says so. For pilot
+data, `startLesson()` logs where a session began (debug panel only so far).
 
 Audio: all 39 clips are Azure speech — `en-US-AndrewMultilingualNeural`
 with `<lang xml:lang="es-MX">` spans (no nested `<voice>`; Azure rejects

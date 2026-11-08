@@ -48,6 +48,7 @@
 
     <button id="btn-start" class="btn-primary">Start Lesson →</button>
     <button id="btn-continue" class="btn-secondary hidden">Continue from where I left off</button>
+    <button id="btn-modules" class="btn-secondary">Browse modules</button>
 
     <p class="kb-hint">
       Press <kbd>Space</kbd> to advance &nbsp;·&nbsp; <kbd>Y</kbd> / <kbd>M</kbd> / <kbd>N</kbd> to rate
@@ -58,7 +59,10 @@
   <section id="screen-lesson" class="screen">
 
     <div class="lesson-header">
-      <p class="wordmark"><span>LT</span> Companion · Spanish</p>
+      <div class="header-row">
+        <p class="wordmark"><span>LT</span> Companion · Spanish</p>
+        <button id="btn-lesson-modules" class="btn-chip">Modules</button>
+      </div>
       <div class="progress-row">
         <div class="progress-track"><div id="progress-bar"></div></div>
         <span id="progress-text" class="progress-text"></span>
@@ -143,6 +147,29 @@
     </div>
 
     <p class="kb-hint"><kbd>N</kbd> No &nbsp;·&nbsp; <kbd>M</kbd> Almost &nbsp;·&nbsp; <kbd>Y</kbd> Yes</p>
+  </section>
+
+  <!-- ── MODULES SCREEN ────────────────────────────── -->
+  <section id="screen-modules" class="screen">
+    <div class="header-row">
+      <p class="wordmark"><span>LT</span> Companion · Spanish</p>
+      <button id="btn-modules-back" class="btn-chip">← Back</button>
+    </div>
+
+    <div class="modules-head">
+      <h2>Modules</h2>
+      <div class="modules-tools">
+        <button id="btn-expand-all" class="btn-chip">Expand all</button>
+        <button id="btn-collapse-all" class="btn-chip">Collapse all</button>
+      </div>
+    </div>
+    <p class="modules-note">
+      Start anywhere. The lesson carries on through the modules that follow.
+      Each module builds on the ones before it, so jumping ahead may ask for
+      something you haven't heard yet.
+    </p>
+
+    <div id="modules-list"></div>
   </section>
 
   <!-- ── SUMMARY SCREEN ────────────────────────────── -->

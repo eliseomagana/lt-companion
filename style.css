@@ -235,19 +235,23 @@ p { color: var(--muted); font-size: 0.95rem; }
 
 /* Color the label pill by item type */
 #item-label[data-type="concept"],
-#item-label[data-type="vowel"] {
+#item-label[data-type="vowel"],
+.type-chip[data-type="concept"],
+.type-chip[data-type="vowel"] {
   color: var(--muted);
   background: var(--surface2);
   border: 1px solid var(--border);
 }
 
-#item-label[data-type="worked"] {
+#item-label[data-type="worked"],
+.type-chip[data-type="worked"] {
   color: var(--accent2);
   background: rgba(62,207,196,.10);
   border: 1px solid rgba(62,207,196,.25);
 }
 
-#item-label[data-type="prompt"] {
+#item-label[data-type="prompt"],
+.type-chip[data-type="prompt"] {
   color: var(--accent);
   background: var(--accent-bg);
   border: 1px solid rgba(123,108,246,.25);
@@ -579,7 +583,170 @@ p { color: var(--muted); font-size: 0.95rem; }
 
 .btn-secondary:hover { border-color: var(--accent); color: var(--text); }
 
+/* Small pill button: header actions, list tools */
+.btn-chip {
+  flex-shrink: 0;
+  padding: .3rem .8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: .75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+
+.btn-chip:hover { border-color: var(--accent); color: var(--accent); }
+
 .hidden { display: none !important; }
+
+/* ── HEADER ROW (wordmark + action) ──────────────────── */
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+}
+
+.header-row .wordmark { text-align: left; }
+
+/* ── MODULES SCREEN ───────────────────────────────────── */
+.modules-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+.modules-tools { display: flex; gap: .5rem; }
+
+.modules-note { font-size: .8rem; line-height: 1.5; }
+
+#modules-list {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.module {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.module[open] { border-color: var(--accent); }
+
+.module > summary,
+.module-item > summary {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.module > summary::-webkit-details-marker,
+.module-item > summary::-webkit-details-marker { display: none; }
+
+/* Chevron that turns when a section opens */
+.module > summary::after,
+.module-item > summary::after {
+  content: "";
+  flex-shrink: 0;
+  width: .5rem;
+  height: .5rem;
+  margin-left: auto;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg);
+  transition: transform .2s;
+}
+
+.module[open] > summary::after,
+.module-item[open] > summary::after { transform: rotate(-135deg); }
+
+.module > summary { padding: 1rem 1.25rem; }
+
+.module-title {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.module-name { color: var(--text); font-weight: 600; font-size: .95rem; }
+
+.module-meta { font-size: .75rem; color: var(--muted); }
+
+.module.is-current .module-name::after {
+  content: "you are here";
+  margin-left: .5rem;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.module-body {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding: 0 1.25rem 1.25rem;
+}
+
+.module-items { list-style: none; display: flex; flex-direction: column; gap: .4rem; }
+
+.module-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.module-item > summary {
+  padding: .6rem .8rem;
+  font-size: .85rem;
+  color: var(--text);
+}
+
+.module-item.is-current { border-color: var(--accent); }
+
+.item-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-done {
+  flex-shrink: 0;
+  font-size: .75rem;
+  color: var(--got);
+}
+
+.type-chip {
+  flex-shrink: 0;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: .1rem .5rem;
+}
+
+.item-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .6rem;
+  padding: 0 .8rem .8rem;
+}
+
+.item-detail p { font-size: .82rem; line-height: 1.55; white-space: pre-line; }
 
 /* ── WORDMARK ─────────────────────────────────────────── */
 .wordmark {

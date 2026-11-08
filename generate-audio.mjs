@@ -47,6 +47,7 @@ if (!fs.existsSync(path.join(ROOT, "app.js"))) {
 }
 const AUDIO_DIR = path.join(ROOT, "audio");
 const ANSWER_DIR = path.join(AUDIO_DIR, "answers");
+const UI_DIR = path.join(AUDIO_DIR, "ui");
 const MANIFEST = path.join(ROOT, ".audio-manifest.json");
 
 const args = process.argv.slice(2);
@@ -185,6 +186,20 @@ function buildSsml(item, glossary) {
        + `</speak>`;
 }
 
+// Spoken interface cues. They play through lessonAudio like everything else,
+// because device speech goes silent once the screen locks.
+const UI_CUES = {
+  got_it_q:  "Got it?",
+  got_it:    "Got it.",
+  come_back: "We'll come back to that.",
+};
+
+function buildCueSsml(text) {
+  return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">`
+       + `<voice name="${EN_VOICE}"><prosody rate="${RATE}">${escapeXml(text)}</prosody></voice>`
+       + `</speak>`;
+}
+
 // The model answer on the answer screen is pure Spanish, so it gets the
 // native voice rather than a <lang> span inside the English one.
 function buildAnswerSsml(item) {
@@ -248,6 +263,7 @@ let manifest = {};
 try { manifest = JSON.parse(fs.readFileSync(MANIFEST, "utf8")); } catch {}
 
 fs.mkdirSync(ANSWER_DIR, { recursive: true });
+fs.mkdirSync(UI_DIR, { recursive: true });
 
 let made = 0, skipped = 0, failed = 0;
 
@@ -268,6 +284,13 @@ const jobs = [
     ssml: buildAnswerSsml(item),
     dest: path.join(ANSWER_DIR, `${item.id}.mp3`),
   })),
+  ...(ANSWERS_ONLY ? [] : Object.entries(UI_CUES).map(([name, text]) => ({
+    id: `cue_${name}`,
+    key: `ui/cue_${name}`,
+    plain: text,
+    ssml: buildCueSsml(text),
+    dest: path.join(UI_DIR, `cue_${name}.mp3`),
+  }))),
 ];
 
 for (const { id, key, plain, ssml, dest } of jobs) {

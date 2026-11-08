@@ -14,6 +14,7 @@ const LESSON_ITEMS = [
   // ── MODULE 0: Vowels ──────────────────────────────────────
   {
     id: "vowel_intro",
+    title: "Five sounds, always the same",
     type: "concept",
     audioSrc: "audio/vowel_intro.mp3",
     caption: `Here's the most important thing in Spanish pronunciation, and it's simpler than English, not harder.
@@ -61,12 +62,14 @@ For Spanish, you're going to unlearn it. Five sounds. Always the same.`,
   },
   {
     id: "vowel_sequence",
+    title: "All five, in order",
     type: "concept",
     audioSrc: "audio/vowel_sequence.mp3",
     caption: `Say the five vowels out loud, in order: A: ah. E: eh. I: ee. O: oh. U: oo. These five sounds are your foundation. Every Spanish word you'll ever say is built from them. From now on, when you see a vowel in a Spanish word, you already know exactly how to say it.`,
   },
   {
     id: "vowel_spanish",
+    title: "A E I O U in Spanish",
     type: "concept",
     audioSrc: "audio/vowel_spanish.mp3",
     caption: `{{es:A}}. {{es:E}}. {{es:I}}. {{es:O}}. {{es:U}}.`,
@@ -75,6 +78,7 @@ For Spanish, you're going to unlearn it. Five sounds. Always the same.`,
   // ── MODULE 1: -tion → -ción ───────────────────────────────
   {
     id: "concept_tion_intro",
+    title: "-tion becomes -ción",
     type: "concept",
     audioSrc: "audio/concept_tion_intro.mp3",
     caption: `Here's your first pattern, and it's going to give you hundreds of words instantly. Any English word ending in "-tion" almost certainly exists in Spanish too. You just change the ending to "-ción." The accent mark on the ó tells you where to stress the word. That's all it does. Let's see it work.`,
@@ -105,6 +109,7 @@ For Spanish, you're going to unlearn it. Five sounds. Always the same.`,
   },
   {
     id: "concept_e_before_s",
+    title: "E before S + consonant",
     type: "concept",
     audioSrc: "audio/concept_e_before_s.mp3",
     caption: `Before the next one, you need one more piece, and it explains something you've probably already noticed about Spanish.
@@ -127,6 +132,7 @@ So if you're converting an English word that starts with S plus a consonant, you
   // ── MODULE 2: -al → -al (stress shift) ───────────────────
   {
     id: "concept_al_intro",
+    title: "-al words: the stress moves to the end",
     type: "concept",
     audioSrc: "audio/concept_al_intro.mp3",
     caption: `Here's a pattern that's almost free: you don't change a single letter.
@@ -179,6 +185,7 @@ And this isn't arbitrary. Spanish has a rule: when a word ends in a consonant ot
   },
   {
     id: "concept_silent_h",
+    title: "The silent H",
     type: "concept",
     audioSrc: "audio/concept_silent_h.mp3",
     caption: `One more thing before the next word, and it's a rule with no exceptions.
@@ -203,6 +210,7 @@ So when you see an H at the start of a Spanish word, your mouth skips straight t
   // ── MODULE 3: -ic → -ico ─────────────────────────────────
   {
     id: "concept_ic_intro",
+    title: "-ic becomes -ico",
     type: "concept",
     audioSrc: "audio/concept_ic_intro.mp3",
     caption: `Another pattern. English words ending in "-ic" become "-ico" in Spanish. This one is almost mechanical: the word usually stays the same, you just add an "o" and shift the stress. Watch.`,
@@ -235,6 +243,7 @@ So when you see an H at the start of a Spanish word, your mouth skips straight t
   // ── MODULE 3: Verb I-form ─────────────────────────────────
   {
     id: "concept_verbs_intro",
+    title: "Verbs: saying \"I\"",
     type: "concept",
     audioSrc: "audio/concept_verbs_intro.mp3",
     caption: `Now let's look at verbs: how to say "I do something." Spanish verbs in their base form (the infinitive) end in -ar, -er, or -ir. For example: "hablar" means "to speak." "comer" means "to eat." To say "I" do something, you drop that infinitive ending and replace it with -o. hablar → hablo. comer → como. The -o ending always means "I."`,
@@ -249,6 +258,7 @@ So when you see an H at the start of a Spanish word, your mouth skips straight t
   },
   {
     id: "concept_necesitar",
+    title: "necesitar: to need",
     type: "concept",
     audioSrc: "audio/concept_necesitar.mp3",
     caption: `The verb "to need" is necesitar. Four syllables. Say it a few times. Now apply the rule: drop -ar, add -o. necesitar → necesito. "I need."`,
@@ -271,6 +281,7 @@ So when you see an H at the start of a Spanish word, your mouth skips straight t
   },
   {
     id: "concept_hablar",
+    title: "hablar: to speak",
     type: "concept",
     audioSrc: "audio/concept_hablar.mp3",
     caption: `Here's the verb you'll use more than almost any other. "To speak" is hablar. Remember, that H is silent, so it opens on the A.
@@ -293,6 +304,7 @@ Now you know what it means and how it sounds. Next you'll put the -o ending on i
   // ── MODULE 4: Chaining verbs ──────────────────────────────
   {
     id: "concept_chaining",
+    title: "Chaining verbs",
     type: "concept",
     audioSrc: "audio/concept_chaining.mp3",
     caption: `Here's where things get powerful. In English you can chain verbs: "I want to use." "I need to speak." Spanish works the same way: conjugate the first verb (add the -o ending), then leave the second verb in its infinitive form. "I want to use" → quiero usar. You only ever conjugate one verb in a chain. The rest stay as infinitives.`,
@@ -323,6 +335,7 @@ Now you know what it means and how it sounds. Next you'll put the -o ending on i
   },
   {
     id: "concept_negation",
+    title: "Making it negative with no",
     type: "concept",
     audioSrc: "audio/concept_negation.mp3",
     caption: `Making something negative in Spanish is easier than in English.
@@ -387,7 +400,7 @@ function saveCC(val) {
 // ── BUILD STAMP ───────────────────────────────────────────
 // Bump this whenever behavior changes. The debug panel prints it so
 // you can tell instantly whether the browser served a cached file.
-const BUILD = "2026-11-01 · azure answers";
+const BUILD = "2026-11-08 · audio cues + wait sound + modules";
 
 // ── TIMING ────────────────────────────────────────────────
 // Language Transfer's own recordings leave roughly 3–5s of silence
@@ -398,7 +411,17 @@ const PROMPT_TIMEOUT  = 9000;  // thinking time before the answer is revealed
 const REPORT_TIMEOUT  = 7000;  // time to self-report before we move on
 
 let phaseTimer = null;
-function clearPhaseTimer() { clearTimeout(phaseTimer); phaseTimer = null; }
+// A pending timeout and the wait sound that measures it are one thing:
+// clearing either clears both.
+function clearPhaseTimer() {
+  clearTimeout(phaseTimer);
+  phaseTimer = null;
+  if (state.waiting) {
+    state.waiting = false;
+    clipToken++;
+    lessonAudio.pause();
+  }
+}
 
 // ── DEBUG PANEL ───────────────────────────────────────────
 // Enable with ?debug=1 in the URL. Logs every media/input event
@@ -452,6 +475,7 @@ function ttsFallback(text, lang = "en-US", onEnd) {
 }
 
 function playItem(item, onEnd) {
+  clipToken++;
   window.speechSynthesis && window.speechSynthesis.cancel();
   lessonAudio.pause();
   lessonAudio.currentTime = 0;
@@ -514,6 +538,8 @@ const state = {
   _pendingTimedOut: false,
   ccOn: loadCC(),
   audioPaused: false,   // true while user has manually paused mid-item
+  waiting: false,       // true while the wait sound times a response window
+  modulesFrom: "start", // screen to return to when leaving the modules list
 };
 
 // ── DOM REFS ─────────────────────────────────────────────
@@ -522,6 +548,7 @@ const screen = {
   lesson:  document.getElementById("screen-lesson"),
   answer:  document.getElementById("screen-answer"),
   summary: document.getElementById("screen-summary"),
+  modules: document.getElementById("screen-modules"),
 };
 
 const els = {
@@ -550,6 +577,13 @@ const els = {
   // summary
   summaryBody:     document.getElementById("summary-body"),
   btnRestart:      document.getElementById("btn-restart"),
+  // modules
+  modulesBtn:      document.getElementById("btn-modules"),
+  lessonModulesBtn:document.getElementById("btn-lesson-modules"),
+  modulesBack:     document.getElementById("btn-modules-back"),
+  modulesList:     document.getElementById("modules-list"),
+  expandAll:       document.getElementById("btn-expand-all"),
+  collapseAll:     document.getElementById("btn-collapse-all"),
 };
 
 // ── SCREEN SWITCHING ─────────────────────────────────────
@@ -597,12 +631,32 @@ function getModuleTag(item) {
   return "Module 5 · Chaining";
 }
 
+// ── POSITION (for "Continue") ────────────────────────────
+// Index into LESSON_ITEMS of the furthest new item reached. Requeued
+// items don't move it, so continuing never steps backwards.
+function loadPosition() {
+  try { return Number(localStorage.getItem("lt_position")) || 0; } catch { return 0; }
+}
+function savePosition(i) {
+  try { localStorage.setItem("lt_position", String(i)); } catch {}
+}
+
+function updateContinueBtn() {
+  const pos = loadPosition();
+  els.continueBtn.classList.toggle("hidden", pos <= 0);
+  if (pos > 0) els.continueBtn.textContent =
+    `Continue · ${getModuleTag(LESSON_ITEMS[pos])}`;
+}
+
 // ── LESSON FLOW ──────────────────────────────────────────
-function startLesson() {
-  state.queue = LESSON_ITEMS.slice();
+// fromIndex lets the modules list start anywhere; the session then runs
+// on through every module after it.
+function startLesson(fromIndex = 0) {
+  state.queue = LESSON_ITEMS.slice(fromIndex);
   state.presented = 0;
   state.requeued = {};
   state.sessionResults = [];
+  dbg("▶ session", `from ${LESSON_ITEMS[fromIndex].id}`);
   showScreen("lesson");
   applyCC();
   nextItem();
@@ -632,6 +686,7 @@ function nextItem() {
   state.currentItem = item;
   state.presented++;
   updateProgress();
+  if (!state.requeued[item.id]) savePosition(LESSON_ITEMS.indexOf(item));
 
   els.moduleTag.textContent = getModuleTag(item);
   updateMediaMetadata(item);
@@ -705,11 +760,10 @@ function showPrompt(item) {
     els.tapZone.classList.add("pulsing");
     // No response within the window is MISSING DATA, not a wrong answer.
     // We reveal the answer but record no latency and no rating.
-    clearPhaseTimer();
-    phaseTimer = setTimeout(() => {
+    startWait("prompt", PROMPT_TIMEOUT, () => {
       dbg("⏰ prompt timeout", item.id + " — no attempt recorded");
       revealAnswer({ timedOut: true });
-    }, PROMPT_TIMEOUT);
+    });
   });
 }
 
@@ -742,15 +796,18 @@ function revealAnswer(opts) {
 
   // Say the answer, then cue that a self-report is expected. With the
   // screen off this spoken cue is the only affordance the learner has.
-  speakAnswer(item, () => {
-    speakCue("Got it?");
-    // Self-report is optional. Staying silent is not a rating — the item
-    // is left unassessed and simply returns.
-    clearPhaseTimer();
-    phaseTimer = setTimeout(() => {
+  speakAnswer(item, awaitReport);
+}
+
+// Self-report is optional. Staying silent is not a rating — the item
+// is left unassessed and simply returns.
+function awaitReport() {
+  const item = state.currentItem;
+  playCue("got_it_q", () => {
+    startWait("report", REPORT_TIMEOUT, () => {
       dbg("⏰ report timeout", item.id + " — no rating recorded");
       skipReport();
-    }, REPORT_TIMEOUT);
+    });
   });
 }
 
@@ -772,65 +829,93 @@ function skipReport() {
   nextItem();
 }
 
-// Speak the Spanish answer. Replayable from the answer screen.
-// Plays through lessonAudio so it keeps working with the screen locked.
-// The token makes a superseded or cancelled run unable to call onEnd.
-let answerToken = 0;
+// ── ANSWER-PHASE AUDIO ────────────────────────────────────
+// The answer, the spoken cues, and the wait sound all play through
+// lessonAudio. Device speech goes silent once the screen locks, and any
+// gap in playback lets the phone drop its media controls, which would
+// leave a hands-free learner with no way to self-report.
+// The token makes a superseded or cancelled clip unable to call onEnd.
+let clipToken = 0;
 
-function speakAnswer(item, onEnd) {
-  if (!item) { onEnd && onEnd(); return; }
-  const token = ++answerToken;
+const CUE_TEXT = {
+  got_it_q:  "Got it?",
+  got_it:    "Got it.",
+  come_back: "We'll come back to that.",
+};
+
+// opts: onEnd, fallbackText/fallbackLang (device voice if the file fails),
+// wave (animate the waveform), onFail (replaces the fallback entirely).
+function playClip(src, opts) {
+  const { onEnd, fallbackText, fallbackLang = "en-US", wave = true, onFail } = opts;
+  const token = ++clipToken;
   const finish = () => {
-    if (token !== answerToken) return;
-    answerToken++;
+    if (token !== clipToken) return;
+    clipToken++;
     state.audioPaused = false;
     updateWaveform(false);
     onEnd && onEnd();
   };
   let fellBack = false;
   const fallback = () => {
-    if (token !== answerToken || fellBack) return;
+    if (token !== clipToken || fellBack) return;
     fellBack = true;
-    // Clip missing or blocked: device voice beats no answer at all.
-    if (!("speechSynthesis" in window)) { finish(); return; }
-    const u = new SpeechSynthesisUtterance(item.answer);
-    u.lang = "es-MX"; u.rate = 0.85;
+    if (onFail) { onFail(); return; }
+    if (!fallbackText || !("speechSynthesis" in window)) { finish(); return; }
+    // Device voice beats nothing, but it may never finish with the screen
+    // off, so it gets a deadline rather than stranding the flow.
+    const u = new SpeechSynthesisUtterance(fallbackText);
+    u.lang = fallbackLang; u.rate = 0.9;
     u.onend = finish;
     u.onerror = finish;
+    setTimeout(finish, 4000);
     window.speechSynthesis.speak(u);
   };
 
   window.speechSynthesis && window.speechSynthesis.cancel();
   lessonAudio.pause();
-  lessonAudio.src = `audio/answers/${item.id}.mp3`;
+  lessonAudio.src = src;
   lessonAudio.onended = finish;
   lessonAudio.onerror = fallback;
   lessonAudio.play()
-    .then(() => { if (token === answerToken) updateWaveform(true); })
-    .catch(fallback);
+    .then(() => { if (token === clipToken && wave) updateWaveform(true); })
+    .catch((e) => { if (e.name !== "AbortError") fallback(); });
 }
 
-// A response supersedes the answer clip and the "Got it?" cue that follows it.
-function cancelAnswerAudio() {
-  answerToken++;
+// The Spanish answer. Replayable from the answer screen.
+function speakAnswer(item, onEnd) {
+  playClip(`audio/answers/${item.id}.mp3`,
+    { onEnd, fallbackText: item.answer, fallbackLang: "es-MX" });
+}
+
+function playCue(name, onEnd) {
+  playClip(`audio/ui/cue_${name}.mp3`, { onEnd, fallbackText: CUE_TEXT[name], wave: false });
+}
+
+// Waiting for the learner. A soft pad plays, with a gentle chime a few
+// seconds before time is up. The track is exactly `ms` long and its end IS
+// the timeout: timers can be delayed with the screen off, audio events
+// aren't. The timer is only a backstop in case the track can't play.
+function startWait(kind, ms, onTimeout) {
+  clearPhaseTimer();
+  state.waiting = true;
+  const done = () => {
+    if (!state.waiting) return;
+    clearPhaseTimer();
+    onTimeout();
+  };
+  playClip(`audio/ui/wait_${kind}.wav`, { onEnd: done, wave: false, onFail: () => {} });
+  phaseTimer = setTimeout(done, ms + 1500);
+}
+
+// A response supersedes whatever answer-phase clip is playing.
+function cancelClip() {
+  clipToken++;
   stopAudio();
-}
-
-// Short spoken interface cue in English (not lesson content).
-function speakCue(text, onEnd) {
-  if (!("speechSynthesis" in window)) { onEnd && onEnd(); return; }
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US"; u.rate = 1.05;
-  if (onEnd) u.onend = onEnd;
-  // Don't let a missing voice strand the flow
-  setTimeout(() => { if (onEnd && !u.__done) { u.__done = true; onEnd(); } }, 2500);
-  u.onend = () => { if (onEnd && !u.__done) { u.__done = true; onEnd(); } };
-  window.speechSynthesis.speak(u);
 }
 
 function rateAnswer(quality) {
   const item = state.currentItem;
-  answerToken++;
+  clipToken++;
   clearPhaseTimer();
   clearTimeout(pressTimer);
   pressCount = 0;
@@ -852,6 +937,7 @@ function rateAnswer(quality) {
 function showSummary() {
   state.phase = "done";
   stopAudio();
+  savePosition(0);  // reached the end: the next session starts fresh
   showScreen("summary");
   const r = state.sessionResults;
   const got = r.filter((x) => x.quality === 2).length;
@@ -911,25 +997,23 @@ function handleAnswerPress() {
   // The learner is responding, so cancel the no-response timeout before
   // it can fire while we're still counting presses.
   clearPhaseTimer();
-  cancelAnswerAudio();
+  cancelClip();
   registerPress((n) => {
     if (n === 1) {
-      speakCue("Got it.", () => rateAnswer(2));
+      playCue("got_it", () => rateAnswer(2));
     } else if (n === 2) {
-      speakCue("We'll come back to that.", () => rateAnswer(0));
+      playCue("come_back", () => rateAnswer(0));
     } else {
       // Replay, then restart the window so they still get a chance to rate.
-      speakAnswer(state.currentItem, () => {
-        speakCue("Got it?");
-        clearPhaseTimer();
-        phaseTimer = setTimeout(skipReport, REPORT_TIMEOUT);
-      });
+      speakAnswer(state.currentItem, awaitReport);
     }
   });
 }
 
 // ── INPUT HANDLING ────────────────────────────────────────
 function isAudioPlaying() {
+  // The wait sound is a clock, not content: a press during it answers.
+  if (state.waiting) return false;
   if (!lessonAudio.paused && !lessonAudio.ended) return true;
   if ("speechSynthesis" in window && window.speechSynthesis.speaking) return true;
   return false;
@@ -980,7 +1064,10 @@ function handleAdvance() {
 
 els.tapZone.addEventListener("click", () => { dbg("👆 tap zone"); handleTap(); });
 document.addEventListener("keydown", (e) => {
-  if (e.target.tagName === "BUTTON") return;
+  // Buttons and list headings handle Space themselves.
+  if (e.target.tagName === "BUTTON" || e.target.tagName === "SUMMARY") return;
+  if (!screen.lesson.classList.contains("active") &&
+      !screen.answer.classList.contains("active")) return;
   if (e.code === "Space") { e.preventDefault(); dbg("⌨ Space"); handleTap(); }
 });
 
@@ -995,9 +1082,138 @@ document.addEventListener("keydown", (e) => {
   if (e.code === "KeyY" || e.code === "Digit3") rateAnswer(2);
 });
 
-els.startBtn.addEventListener("click",    startLesson);
-els.continueBtn.addEventListener("click", startLesson);
-els.btnRestart.addEventListener("click",  () => showScreen("start"));
+els.startBtn.addEventListener("click",    () => startLesson(0));
+els.continueBtn.addEventListener("click", () => startLesson(loadPosition()));
+els.btnRestart.addEventListener("click",  () => { updateContinueBtn(); showScreen("start"); });
+
+// ── MODULES SCREEN ────────────────────────────────────────
+// Modules in lesson order, each with its items and their array index.
+function getModules() {
+  const mods = [];
+  LESSON_ITEMS.forEach((item, index) => {
+    const name = getModuleTag(item);
+    let m = mods[mods.length - 1];
+    if (!m || m.name !== name) mods.push(m = { name, items: [] });
+    m.items.push({ item, index });
+  });
+  return mods;
+}
+
+const TYPE_LABELS = { concept: "Listen", vowel: "Vowel", worked: "Example", prompt: "Your turn" };
+
+// Prompts show only the English: listing the answer would spoil the recall.
+function itemTitle(item) {
+  if (item.type === "prompt") return `Say: "${item.english}"`;
+  if (item.type === "worked") return `"${item.english}" → ${item.answer}`;
+  if (item.type === "vowel") return `The Spanish ${item.vowelLetter}`;
+  return item.title || item.id;
+}
+
+function itemDetail(item) {
+  if (item.type === "prompt") return "You'll be asked to say this in Spanish.";
+  return stripLangMarkers(item.caption || "");
+}
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+
+function renderModules() {
+  // Mid-lesson, "here" is the item on screen; otherwise the saved position.
+  const here = state.modulesFrom === "lesson" && state.currentItem
+    ? LESSON_ITEMS.indexOf(state.currentItem) : loadPosition();
+  els.modulesList.replaceChildren();
+
+  getModules().forEach((mod) => {
+    const prompts = mod.items.filter(({ item }) => item.type === "prompt");
+    const practiced = prompts.filter(({ item }) => state.progress[item.id]).length;
+    const isCurrent = mod.items.some(({ index }) => index === here);
+
+    const details = el("details", "module" + (isCurrent ? " is-current" : ""));
+    details.open = isCurrent;
+
+    const summary = el("summary");
+    const title = el("span", "module-title");
+    title.append(
+      el("span", "module-name", mod.name),
+      el("span", "module-meta", `${mod.items.length} items` +
+        (prompts.length ? ` · ${practiced}/${prompts.length} practiced` : ""))
+    );
+    summary.append(title);
+
+    const body = el("div", "module-body");
+    const startBtn = el("button", "btn-secondary", "Start this module");
+    startBtn.addEventListener("click", () => startLesson(mod.items[0].index));
+    const list = el("ul", "module-items");
+
+    mod.items.forEach(({ item, index }) => {
+      const row = el("details", "module-item" + (index === here ? " is-current" : ""));
+      const rowSummary = el("summary");
+      const chip = el("span", "type-chip", TYPE_LABELS[item.type]);
+      chip.dataset.type = item.type;
+      rowSummary.append(chip, el("span", "item-name", itemTitle(item)));
+      if (item.type === "prompt" && state.progress[item.id])
+        rowSummary.append(el("span", "item-done", "✓"));
+
+      const detail = el("div", "item-detail");
+      const playBtn = el("button", "btn-chip", "Start here →");
+      playBtn.addEventListener("click", () => startLesson(index));
+      detail.append(el("p", null, itemDetail(item)), playBtn);
+
+      row.append(rowSummary, detail);
+      const li = el("li");
+      li.append(row);
+      list.append(li);
+    });
+
+    body.append(startBtn, list);
+    details.append(summary, body);
+    els.modulesList.append(details);
+  });
+}
+
+// Leaving a lesson for the list pauses it completely: no timer may fire
+// and nothing may keep playing while the learner browses.
+function openModules(from) {
+  if (from === "lesson") {
+    clearPhaseTimer();
+    clearTimeout(pressTimer);
+    pressCount = 0;
+    cancelClip();
+    state.phase = "idle";
+  }
+  state.modulesFrom = from;
+  renderModules();
+  showScreen("modules");
+  const current = els.modulesList.querySelector(".module.is-current");
+  if (current) current.scrollIntoView({ block: "nearest" });
+}
+
+// Back to a lesson replays the item that was interrupted from its start.
+function closeModules() {
+  const item = state.currentItem;
+  if (state.modulesFrom === "lesson" && item) {
+    showScreen("lesson");
+    if (item.type === "prompt") showPrompt(item);
+    else showListenItem(item);
+  } else {
+    updateContinueBtn();
+    showScreen("start");
+  }
+}
+
+function setAllOpen(open) {
+  els.modulesList.querySelectorAll("details").forEach((d) => { d.open = open; });
+}
+
+els.modulesBtn.addEventListener("click",       () => openModules("start"));
+els.lessonModulesBtn.addEventListener("click", () => openModules("lesson"));
+els.modulesBack.addEventListener("click",      closeModules);
+els.expandAll.addEventListener("click",        () => setAllOpen(true));
+els.collapseAll.addEventListener("click",      () => setAllOpen(false));
 
 // ── MEDIA SESSION API ─────────────────────────────────────
 function updateMediaMetadata(item) {
@@ -1041,8 +1257,8 @@ if ("mediaSession" in navigator) {
     if (state.phase === "show_answer") {
       clearTimeout(pressTimer); pressCount = 0;
       clearPhaseTimer();
-      cancelAnswerAudio();
-      speakCue("Got it.", () => rateAnswer(2));
+      cancelClip();
+      playCue("got_it", () => rateAnswer(2));
     } else handleAdvance();
   });
 
@@ -1052,8 +1268,8 @@ if ("mediaSession" in navigator) {
     if (state.phase === "show_answer") {
       clearTimeout(pressTimer); pressCount = 0;
       clearPhaseTimer();
-      cancelAnswerAudio();
-      speakCue("We'll come back to that.", () => rateAnswer(0));
+      cancelClip();
+      playCue("come_back", () => rateAnswer(0));
     }
     else if (state.currentItem) {
       stopAudio();
@@ -1093,8 +1309,7 @@ document.addEventListener("visibilitychange", () =>
 
 // ── INIT ─────────────────────────────────────────────────
 (function init() {
-  if (Object.keys(state.progress).length > 0)
-    els.continueBtn.classList.remove("hidden");
+  updateContinueBtn();
   applyCC();
 
   if (DEBUG) {
