@@ -34,5 +34,15 @@
   "worked_querer": {
     "status": "needs_work",
     "note": "Audio-only rewrite applied 2026-11-08 (was \"a small spelling change\"). Listen to confirm."
+  },
+  "vowel_intro": {
+    "status": "ok",
+    "note": "",
+    "updated": "2026-11-11T20:29:05.856Z"
+  },
+  "vowel_a": {
+    "status": "needs_work",
+    "note": "",
+    "updated": "2026-11-11T20:31:06.208Z"
   }
 }

@@ -473,7 +473,9 @@ function select(id) {
           h("code", {}, "{{es:palabra}}"), " say in Spanish · ",
           h("code", {}, "{{en:word}}"), " force English · ",
           h("code", {}, "{{ipa:-ción|sjon}}"), " exact Spanish sound, shows the first part · ",
-          h("code", {}, "{{say:→|becomes}}"), " say something else, shows the first part. ",
+          h("code", {}, "{{say:→|becomes}}"), " say something else, shows the first part · ",
+          h("code", {}, "{{pause}}"), " one-second pause, or ", h("code", {}, "{{pause:2s}}"), " / ",
+          h("code", {}, "{{pause:500ms}}"), " (up to 5s), shows nothing. ",
           "For a fix that should apply everywhere, use the pronunciation dictionary instead."))),
 
     h("div", { class: "card" },

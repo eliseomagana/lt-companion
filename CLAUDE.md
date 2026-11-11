@@ -180,6 +180,8 @@ can only be read.
 `{{es:...}}` and `{{en:...}}` force pronunciation language in the audio
 generator; `{{ipa:shown|ipa}}` gives an exact Spanish sound and
 `{{say:shown|spoken}}` speaks a substitute, each showing only `shown`.
+`{{pause}}` (1s) or `{{pause:2s}}` / `{{pause:500ms}}` (max 5s) inserts a
+silence and shows nothing.
 `stripLangMarkers()` **must** run before any caption reaches the screen,
 and must accept every marker form the generator's `OVERRIDE_RE` does.
 

@@ -100,6 +100,18 @@ const NEVER_AUTO = new Set([
 // app.js's stripLangMarkers() must accept every form listed here.
 const OVERRIDE_RE = /\{\{(es|en|ipa|say):([^}|]+)(?:\|([^}]+))?\}\}/gi;
 
+// Pauses: {{pause}} is one second, {{pause:2s}} or {{pause:500ms}} any
+// length up to Azure's 5-second limit. Shows nothing on screen.
+const PAUSE_RE = /\{\{pause(?::\s*(\d+(?:\.\d+)?)\s*(ms|s)?)?\s*\}\}/gi;
+const PAUSE_DEFAULT_MS = 1000;
+const PAUSE_MAX_MS = 5000;
+
+function pauseMs(amount, unit) {
+  if (!amount) return PAUSE_DEFAULT_MS;
+  const ms = Number(amount) * (unit && unit.toLowerCase() === "ms" ? 1 : 1000);
+  return Math.min(PAUSE_MAX_MS, Math.round(ms));
+}
+
 // ── Pronunciation dictionary ─────────────────────────────────────────
 // pronunciations.json fixes a spelling everywhere it appears, e.g. "-ción",
 // which the English voice read as "cyan". Each entry is
@@ -163,6 +175,9 @@ function markupSpanish(text, glossary, dictionary = []) {
   const slots = [];
   const slot = (ssml) => `\u0000${slots.push(ssml) - 1}\u0000`;
   let out = escapeXml(text);
+
+  out = out.replace(PAUSE_RE, (_, amount, unit) =>
+    slot(`<break time="${pauseMs(amount, unit)}ms"/>`));
 
   // Explicit overrides win and are locked in before auto-tagging runs,
   // so the heuristic can't touch or double-wrap them.

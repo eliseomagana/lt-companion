@@ -30,7 +30,7 @@ For Spanish, you're going to unlearn it. Five sounds. Always the same.`,
     type: "vowel",
     vowelLetter: "A",
     audioSrc: "audio/vowel_a.mp3",
-    caption: `The Spanish A. Always "ah," like the sound a doctor asks you to make. Open, from the back of the throat. Not "ay" like "face." Not "uh" like "about." Just: ah. Examples: "casa": ah. "gracias": ah. Every single time.`,
+    caption: `The Spanish A. Always "{{es:A}}" like the sound a doctor asks you to make. Open, from the back of the throat. Not like the "A" in "face" or the "A" in "about." Just: {{es:ah}}. Examples: {{es:casa}} {{pause}} {{es:ah}} {{pause}} {{es:gracias}} {{pause}} {{es:ah}}. Every single time.`,
   },
   {
     id: "vowel_e",
@@ -361,10 +361,13 @@ One word, in front, no rearranging. When you hear "don't" in English, just reach
 const PROMPT_ITEMS = LESSON_ITEMS.filter((i) => i.type === "prompt");
 
 // Captions embed {{es:…}} / {{en:…}} / {{ipa:shown|…}} / {{say:shown|…}}
-// markers that tell the audio generator how to pronounce a span. Only the
-// shown text may reach the screen.
+// markers that tell the audio generator how to pronounce a span, and
+// {{pause}} / {{pause:2s}}, which show nothing. Only the shown text may
+// reach the screen.
 function stripLangMarkers(text) {
-  return String(text).replace(/\{\{(?:es|en|ipa|say):([^}|]*)(?:\|[^}]*)?\}\}/gi, "$1");
+  return String(text)
+    .replace(/ ?\{\{pause[^}]*\}\}/gi, "")
+    .replace(/\{\{(?:es|en|ipa|say):([^}|]*)(?:\|[^}]*)?\}\}/gi, "$1");
 }
 
 // ── SM-2 SPACED REPETITION ────────────────────────────────
@@ -416,7 +419,7 @@ function saveSpeed(v) {
 // ── BUILD STAMP ───────────────────────────────────────────
 // Bump this whenever behavior changes. The debug panel prints it so
 // you can tell instantly whether the browser served a cached file.
-const BUILD = "2026-11-08 · audio-only script rewrites";
+const BUILD = "2026-11-11 · pause markers + review edits";
 
 // ── TIMING ────────────────────────────────────────────────
 // Language Transfer's own recordings leave roughly 3–5s of silence
